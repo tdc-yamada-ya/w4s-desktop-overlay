@@ -1,5 +1,12 @@
 import path from "path";
-import {BrowserWindow, app, session, ipcMain, IpcMainEvent} from "electron";
+import {
+  BrowserWindow,
+  app,
+  session,
+  ipcMain,
+  IpcMainEvent,
+  WebContents,
+} from "electron";
 import {searchDevtools} from "electron-search-devtools";
 import {createOverlay} from "./overlay";
 import {createCachedReplicantFactory} from "./lib/ts-electron-replicant/createReplicantCache";
@@ -109,5 +116,13 @@ const init = async () => {
   );
 };
 
+const disableNavigate = (_: unknown, contents: WebContents) =>
+  contents.on("will-navigate", (event: Event) => event.preventDefault());
+
+const disableOpenWindow = (_: unknown, contents: WebContents) =>
+  contents.setWindowOpenHandler(() => ({action: "deny"}));
+
+app.on("web-contents-created", disableNavigate);
+app.on("web-contents-created", disableOpenWindow);
 app.whenReady().then(init);
 app.once("window-all-closed", quit);

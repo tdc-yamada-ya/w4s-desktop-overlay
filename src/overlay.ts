@@ -1,6 +1,7 @@
-import {BrowserWindow} from "electron";
+import {BrowserWindow, session} from "electron";
 import {isEqual, omitBy} from "lodash";
 import {Bounds, LayerConfig, OverlayConfig} from "./replicant/replicants";
+import {v4 as uuid} from "uuid";
 
 export type Overlay = {
   apply(config?: OverlayConfig): void;
@@ -110,15 +111,25 @@ export const createLayer = ({dev}: {dev: boolean}): Layer => {
 };
 
 const createWindow = ({dev}: {dev: boolean}): BrowserWindow => {
+  const ses = session.fromPartition(uuid());
+
+  ses.setPermissionRequestHandler((_webContents, _permission, callback) =>
+    callback(false),
+  );
+
   const w = new BrowserWindow({
     alwaysOnTop: true,
     frame: false,
     fullscreen: true,
-    opacity: 0.8,
     resizable: false,
-    show: false,
     skipTaskbar: true,
+    opacity: 0.8,
+    show: false,
     transparent: true,
+    webPreferences: {
+      sandbox: true,
+      session: ses,
+    },
   });
 
   w.setAlwaysOnTop(true, "screen-saver");
