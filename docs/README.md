@@ -17,7 +17,7 @@ For example, clock, agenda, donation, or chat.
 
 The app installer can be downloaded from GitHub Releases.
 
-https://github.com/tdc-yamada-ya/w4s-desktop-overlay/releases
+[https://github.com/tdc-yamada-ya/w4s-desktop-overlay/releases](https://github.com/tdc-yamada-ya/w4s-desktop-overlay/releases)
 
 ## Usage
 
