@@ -1,4 +1,4 @@
-import {OverlayConfig} from "../../replicant/replicants";
+import {OverlayConfig} from "../../replicant/OverlayConfig";
 import {updateReplicant} from "./updateReplicant";
 
 export const updateOverlay = (

@@ -1,5 +1,6 @@
+import {ReplicantMap} from "../../replicant/ReplicantMap";
+import {ReplicantName} from "../../replicant/ReplicantName";
 import {updateReplicant as update} from "../../replicant/updateReplicant";
-import {ReplicantMap, ReplicantName} from "../../replicant/replicants";
 
 export const updateReplicant = <TName extends ReplicantName>(
   name: TName,

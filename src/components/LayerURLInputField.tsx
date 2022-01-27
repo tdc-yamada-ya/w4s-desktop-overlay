@@ -1,7 +1,7 @@
 import {Box, InputBase} from "@mui/material";
 import {merge} from "lodash";
 import {FormEventHandler, useState} from "react";
-import {OverlayConfig} from "../replicant/replicants";
+import {OverlayConfig} from "../replicant/OverlayConfig";
 
 const modifyLayerURL = (id: string, url?: string) => {
   const r = window.api.replicant("overlay");

@@ -1,5 +1,5 @@
 import {Schema} from "electron-store";
-import {ReplicantMap} from "../replicants";
+import {ReplicantMap} from "../ReplicantMap";
 
 const bounds = {
   type: "object",

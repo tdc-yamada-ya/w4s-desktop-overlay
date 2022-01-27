@@ -1,4 +1,4 @@
-import {API} from "../bridge";
+import {API} from "../api";
 
 declare global {
   interface Window {

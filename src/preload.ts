@@ -1,13 +1,13 @@
 import {contextBridge, ipcRenderer} from "electron";
-import {API} from "./bridge";
-import {createMessageSender} from "./lib/ts-electron-message/createMessageSender";
-import {createMessageSubscriber} from "./lib/ts-electron-message/createMessageSubscriber";
-import {createChildReplicant} from "./lib/ts-electron-replicant/createChildReplicant";
-import {createCachedReplicantFactory} from "./lib/ts-electron-replicant/createReplicantCache";
+import {API} from "./api";
+import {createMessageSender} from "./lib/electron-message/createMessageSender";
+import {createMessageSubscriber} from "./lib/electron-message/createMessageSubscriber";
+import {createChildReplicant} from "./lib/electron-replicant/createChildReplicant";
+import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
 import {MessageMap} from "./message/messages";
-import {ReplicantMap} from "./replicant/replicants";
+import {ReplicantMap} from "./replicant/ReplicantMap";
 
-const replicantFactory = createCachedReplicantFactory<ReplicantMap>({
+const repFactory = createCachedReplicantFactory<ReplicantMap>({
   createReplicant: (name) => {
     return createChildReplicant(name, {
       sender: ipcRenderer,
@@ -15,20 +15,23 @@ const replicantFactory = createCachedReplicantFactory<ReplicantMap>({
     });
   },
 });
-const messageSender = createMessageSender<MessageMap>({sender: ipcRenderer});
-const messageSubscriber = createMessageSubscriber<MessageMap, unknown>({
+const msgSender = createMessageSender<MessageMap>({sender: ipcRenderer});
+const msgSubscriber = createMessageSubscriber<MessageMap, unknown>({
   subscriber: ipcRenderer,
 });
 
 const api: API = {
-  replicant: (name) => replicantFactory.createReplicant(name),
-  reload: (id) => messageSender.send("reload", id),
-  help: () => messageSender.send("help"),
+  replicant: (name) => repFactory.createReplicant(name),
+
+  reload: (id) => msgSender.send("reload", id),
+
+  help: () => msgSender.send("help"),
+
   subscribeVersion: (listener) => {
     const l = (_: unknown, v: string) => listener(v);
-    messageSubscriber.on("version", l);
-    messageSender.send("version");
-    return () => messageSubscriber.off("version", l);
+    msgSubscriber.on("version", l);
+    msgSender.send("version");
+    return () => msgSubscriber.off("version", l);
   },
 };
 

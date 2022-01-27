@@ -1,27 +1,22 @@
 import path from "path";
-import {
-  BrowserWindow,
-  app,
-  session,
-  ipcMain,
-  IpcMainEvent,
-  WebContents,
-} from "electron";
-import {searchDevtools} from "electron-search-devtools";
-import {createOverlay} from "./overlay";
-import {createCachedReplicantFactory} from "./lib/ts-electron-replicant/createReplicantCache";
-import {createParentReplicant} from "./lib/ts-electron-replicant/createParentReplicant";
-import {store} from "./replicant/store/store";
-import {ReplicantMap} from "./replicant/replicants";
+import {app, ipcMain, IpcMainEvent, WebContents} from "electron";
+import {createOverlay} from "./main/overlay/createOverlay";
+import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
+import {createParentReplicant} from "./lib/electron-replicant/createParentReplicant";
+import {defaultStore} from "./replicant/store/defaultStore";
+import {ReplicantMap} from "./replicant/ReplicantMap";
 import {screen} from "electron";
-import {createMessageSubscriber} from "./lib/ts-electron-message/createMessageSubscriber";
+import {createMessageSubscriber} from "./lib/electron-message/createMessageSubscriber";
 import {MessageMap} from "./message/messages";
 import {openHelp} from "./main/openHelp";
-import {createMessageSender} from "./lib/ts-electron-message/createMessageSender";
+import {createMessageSender} from "./lib/electron-message/createMessageSender";
+import {createMainWindow} from "./createMainWindow";
+import {initReactDevtool} from "./main/initReactDevtool";
+import {dev} from "./dev";
+import {OverlayConfig} from "./replicant/OverlayConfig";
+import {merge} from "lodash";
 
-const isDev = process.env["NODE_ENV"] === "development";
-
-if (isDev) {
+if (dev) {
   const execPath =
     process.platform === "win32"
       ? "../node_modules/electron/dist/electron.exe"
@@ -36,57 +31,32 @@ if (isDev) {
   });
 }
 
-const destroyAllWindows = () =>
-  BrowserWindow.getAllWindows().forEach((w) => w.destroy());
-
-const createMainWindow = () => {
-  const w = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-    },
-  });
-
-  w.setMenu(null);
-  w.on("closed", destroyAllWindows);
-
-  if (isDev) w.webContents.openDevTools({mode: "detach"});
-
-  w.loadFile("dist/index.html");
-
-  return w;
-};
-
-const quit = () => app.quit();
-
-const initReactDevtool = async () => {
-  const devtool = await searchDevtools("REACT", {browser: "google-chrome"});
-  if (devtool) {
-    await session.defaultSession.loadExtension(devtool, {
-      allowFileAccess: true,
-    });
-  }
-};
-
 const init = async () => {
-  if (isDev) await initReactDevtool();
+  if (dev) await initReactDevtool();
 
-  const mainWindow = createMainWindow();
-
-  const replicantFactory = createCachedReplicantFactory<ReplicantMap>({
+  const mainWindow = createMainWindow({dev});
+  const repFactory = createCachedReplicantFactory<ReplicantMap>({
     createReplicant: (name) =>
       createParentReplicant(name, {
-        persistence: store,
+        persistence: defaultStore,
         senders: () => [mainWindow.webContents],
         subscriber: ipcMain,
       }),
   });
-
-  const overlayRep = replicantFactory.createReplicant("overlay");
-  const screenRep = replicantFactory.createReplicant("screen");
-
-  const overlay = createOverlay({dev: isDev});
+  const overlayRep = repFactory.createReplicant("overlay");
+  const screenRep = repFactory.createReplicant("screen");
+  const overlay = createOverlay({
+    onBounds(id, bounds) {
+      const diff: OverlayConfig = {
+        layers: {
+          [id]: {
+            bounds,
+          },
+        },
+      };
+      overlayRep.set(merge(overlayRep.get(), diff));
+    },
+  });
 
   overlayRep.subscribe((n) => overlay.apply(n));
 
@@ -102,19 +72,21 @@ const init = async () => {
 
   refreshScreenReplicant();
 
-  const messageSender = createMessageSender<MessageMap>({
+  const msgSender = createMessageSender<MessageMap>({
     sender: mainWindow.webContents,
   });
-  const messageSubscriber = createMessageSubscriber<MessageMap, IpcMainEvent>({
+  const msgSubscriber = createMessageSubscriber<MessageMap, IpcMainEvent>({
     subscriber: ipcMain,
   });
 
-  messageSubscriber.on("reload", (_, id) => overlay.reload(id));
-  messageSubscriber.on("help", openHelp);
-  messageSubscriber.on("version", () =>
-    messageSender.send("version", app.getVersion()),
+  msgSubscriber.on("reload", (_, id) => overlay.reload(id));
+  msgSubscriber.on("help", openHelp);
+  msgSubscriber.on("version", () =>
+    msgSender.send("version", app.getVersion()),
   );
 };
+
+const quit = () => app.quit();
 
 const disableNavigate = (_: unknown, contents: WebContents) =>
   contents.on("will-navigate", (event: Event) => event.preventDefault());

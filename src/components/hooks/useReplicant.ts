@@ -1,6 +1,6 @@
 import {cloneDeep} from "lodash";
 import {useEffect, useState} from "react";
-import {ReplicantMap} from "../../replicant/replicants";
+import {ReplicantMap} from "../../replicant/ReplicantMap";
 
 export const useReplicant = <TName extends keyof ReplicantMap & string>(
   name: TName,
