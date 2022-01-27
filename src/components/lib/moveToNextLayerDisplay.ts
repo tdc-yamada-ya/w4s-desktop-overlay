@@ -1,10 +1,11 @@
-import {OverlayConfig, ScreenConfig} from "../../replicant/replicants";
 import {merge} from "lodash";
+import {OverlayConfig} from "../../replicant/OverlayConfig";
+import {Screen} from "../../replicant/ScreenConfig";
 
 export const moveToNextLayerDisplay = (
   o: OverlayConfig | undefined,
   id: string,
-  screen: ScreenConfig | undefined,
+  screen: Screen | undefined,
 ): OverlayConfig => {
   const oldDisplay = o?.layers?.[id]?.display ?? 0;
   const displayCount = screen?.displays?.length ?? 0;

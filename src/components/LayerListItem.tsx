@@ -1,5 +1,4 @@
 import {Box, ButtonGroup, Tooltip, Typography} from "@mui/material";
-import {LayerConfig} from "../replicant/replicants";
 import {LayerURLInputField} from "./LayerURLInputField";
 import {DeleteLayerButton} from "./DeleteLayerButton";
 import {ToggleLayerVisibleButton} from "./ToggleLayerVisibleButton";
@@ -9,6 +8,8 @@ import {ToggleLayerAudioMutedButton} from "./ToggleLayerAudioMutedButton";
 import {ReloadLayerButton} from "./ReloadLayerButton";
 import OpacityIcon from "@mui/icons-material/Opacity";
 import {LayerOpacitySlider} from "./LayerOpacitySlider";
+import {LayerConfig} from "../replicant/LayerConfig";
+import {ToggleLayerLayoutingModeButton} from "./ToggleLayerLayoutingModeButton copy";
 
 export const LayerListItem = ({
   id,
@@ -76,6 +77,10 @@ export const LayerListItem = ({
           <MoveNextLayerDisplayButton id={id} />
           <ToggleLayerAudioMutedButton id={id} audioMuted={layer.audioMuted} />
           <ToggleLayerVisibleButton id={id} visible={layer.visible} />
+          <ToggleLayerLayoutingModeButton
+            id={id}
+            layoutingMode={layer.layoutingMode}
+          />
           <DeleteLayerButton id={id} />
         </ButtonGroup>
       </Box>

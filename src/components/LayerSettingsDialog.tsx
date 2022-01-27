@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import {merge} from "lodash";
 import {useEffect, useState} from "react";
-import {OverlayConfig} from "../replicant/replicants";
+import {OverlayConfig} from "../replicant/OverlayConfig";
 import {updateOverlay} from "./lib/updateOverlay";
 
 export const LayerSettingsDialog = ({

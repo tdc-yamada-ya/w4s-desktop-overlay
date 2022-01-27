@@ -1,4 +1,4 @@
-import {Replicant} from "../lib/ts-electron-replicant/Replicant";
+import {Replicant} from "../lib/electron-replicant/Replicant";
 
 export const updateReplicant = <TValue>(
   rep: Replicant<TValue>,

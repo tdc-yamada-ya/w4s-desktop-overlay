@@ -1,5 +1,5 @@
-import {OverlayConfig} from "../../replicant/replicants";
 import {merge} from "lodash";
+import {OverlayConfig} from "../../replicant/OverlayConfig";
 
 export const toggleLayerAudioMuted = (
   o: OverlayConfig | undefined,
