@@ -1,20 +1,21 @@
-import path from "path";
-import {app, ipcMain, IpcMainEvent, WebContents} from "electron";
-import {createOverlay} from "./main/overlay/createOverlay";
-import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
-import {createParentReplicant} from "./lib/electron-replicant/createParentReplicant";
-import {defaultStore} from "./replicant/store/defaultStore";
-import {ReplicantMap} from "./replicant/ReplicantMap";
+import {IpcMainEvent, WebContents, app, ipcMain} from "electron";
 import {screen} from "electron";
-import {createMessageSubscriber} from "./lib/electron-message/createMessageSubscriber";
-import {MessageMap} from "./message/messages";
-import {openHelp} from "./main/openHelp";
-import {createMessageSender} from "./lib/electron-message/createMessageSender";
-import {createMainWindow} from "./createMainWindow";
-import {initReactDevtool} from "./main/initReactDevtool";
-import {dev} from "./dev";
-import {OverlayConfig} from "./replicant/OverlayConfig";
 import {merge} from "lodash";
+import path from "path";
+
+import {createMainWindow} from "./createMainWindow";
+import {dev} from "./dev";
+import {createMessageSender} from "./lib/electron-message/createMessageSender";
+import {createMessageSubscriber} from "./lib/electron-message/createMessageSubscriber";
+import {createParentReplicant} from "./lib/electron-replicant/createParentReplicant";
+import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
+import {initReactDevtool} from "./main/initReactDevtool";
+import {openHelp} from "./main/openHelp";
+import {createOverlay} from "./main/overlay/createOverlay";
+import {MessageMap} from "./message/MessageMap";
+import {OverlayConfig} from "./replicant/OverlayConfig";
+import {ReplicantMap} from "./replicant/ReplicantMap";
+import {defaultStore} from "./replicant/store/defaultStore";
 
 if (dev) {
   const execPath =
@@ -34,7 +35,7 @@ if (dev) {
 const init = async () => {
   if (dev) await initReactDevtool();
 
-  const mainWindow = createMainWindow({dev});
+  const mainWindow = createMainWindow();
   const repFactory = createCachedReplicantFactory<ReplicantMap>({
     createReplicant: (name) =>
       createParentReplicant(name, {

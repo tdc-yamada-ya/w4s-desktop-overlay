@@ -1,9 +1,10 @@
-import {Replicant} from "./Replicant";
 import EventEmitter from "events";
+
+import {BuildChannelNames, createBuildChannelNames} from "./ChannelNames";
 import {MessageSender} from "./MessageSender";
 import {MessageSubscriber} from "./MessageSubscriber";
+import {Replicant} from "./Replicant";
 import {ReplicantMap} from "./ReplicantMap";
-import {BuildChannelNames, createBuildChannelNames} from "./ChannelNames";
 
 export type Persistence<
   TMap extends ReplicantMap,

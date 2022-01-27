@@ -1,14 +1,18 @@
 import {BrowserWindow} from "electron";
 import path from "path";
 
+import {dev} from "./dev";
+
 const destroyAllWindows = () =>
   BrowserWindow.getAllWindows().forEach((w) => w.destroy());
 
-export const createMainWindow = ({dev}: {dev: boolean}) => {
+export const createMainWindow = (): BrowserWindow => {
+  const alwaysOnTop = dev ? false : true;
+
   const w = new BrowserWindow({
-    alwaysOnTop: true,
-    width: 800,
-    height: 600,
+    alwaysOnTop,
+    width: 1024,
+    height: 768,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },

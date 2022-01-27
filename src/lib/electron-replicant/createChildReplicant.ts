@@ -1,9 +1,10 @@
 import EventEmitter from "events";
-import {MessageSender} from "./MessageSender";
+
 import {BuildChannelNames, createBuildChannelNames} from "./ChannelNames";
+import {MessageSender} from "./MessageSender";
+import {MessageSubscriber} from "./MessageSubscriber";
 import {Replicant} from "./Replicant";
 import {ReplicantMap} from "./ReplicantMap";
-import {MessageSubscriber} from "./MessageSubscriber";
 
 export const createChildReplicant = <
   TMap extends ReplicantMap,

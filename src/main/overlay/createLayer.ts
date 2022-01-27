@@ -1,8 +1,8 @@
 import {Bounds} from "../../replicant/Bounds";
 import {LayerConfig} from "../../replicant/LayerConfig";
-import {createLayerWindow} from "./createLayerWindow";
 import {Layer} from "./Layer";
 import {LayerWindow} from "./LayerWindow";
+import {createLayerWindow} from "./createLayerWindow";
 
 export const createLayer = ({
   layer,
@@ -56,6 +56,11 @@ export const createLayer = ({
       if (l.opacity != null) {
         w.setOpacity(l.opacity);
         cl.opacity = l.opacity;
+      }
+
+      if (l.url != null) {
+        w.setURL(l.url);
+        cl.url = l.url;
       }
 
       if (l.visible != null) {

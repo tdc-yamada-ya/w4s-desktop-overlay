@@ -1,10 +1,11 @@
 import {isEqual, omitBy} from "lodash";
+
 import {Bounds} from "../../replicant/Bounds";
 import {LayerConfig} from "../../replicant/LayerConfig";
 import {OverlayConfig} from "../../replicant/OverlayConfig";
-import {createLayer} from "./createLayer";
 import {Layer} from "./Layer";
 import {Overlay} from "./Overlay";
+import {createLayer} from "./createLayer";
 
 export const createOverlay = ({
   onBounds,

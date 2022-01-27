@@ -6,4 +6,5 @@ type LayerMap = {
 
 export type OverlayConfig = {
   layers?: LayerMap;
+  selectedLayerID?: string;
 };
