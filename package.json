@@ -1,7 +1,7 @@
 {
   "name": "w4s-desktop-overlay",
   "description": "This is a desktop application for streamers that overlays web pages on your desktop.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "main": "dist/main.js",
   "scripts": {
