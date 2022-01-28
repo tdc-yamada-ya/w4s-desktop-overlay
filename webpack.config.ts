@@ -1,7 +1,7 @@
-import path from "path";
-import {Configuration} from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import path from "path";
+import {Configuration} from "webpack";
 
 const isDev = process.env["NODE_ENV"] === "development";
 
@@ -26,7 +26,7 @@ const common: Configuration = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: "ts-loader",
+        use: ["babel-loader", "ts-loader"],
       },
       {
         test: /\.s?css$/,

@@ -1,10 +1,11 @@
 import {contextBridge, ipcRenderer} from "electron";
+
 import {API} from "./api";
 import {createMessageSender} from "./lib/electron-message/createMessageSender";
 import {createMessageSubscriber} from "./lib/electron-message/createMessageSubscriber";
 import {createChildReplicant} from "./lib/electron-replicant/createChildReplicant";
 import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
-import {MessageMap} from "./message/messages";
+import {MessageMap} from "./message/MessageMap";
 import {ReplicantMap} from "./replicant/ReplicantMap";
 
 const repFactory = createCachedReplicantFactory<ReplicantMap>({

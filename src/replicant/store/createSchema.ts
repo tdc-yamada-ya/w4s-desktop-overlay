@@ -1,4 +1,5 @@
 import {Schema} from "electron-store";
+
 import {ReplicantMap} from "../ReplicantMap";
 
 const bounds = {
@@ -22,22 +23,36 @@ const bounds = {
 export const createSchema = (): Schema<ReplicantMap> => ({
   overlay: {
     type: "object",
-    additionalProperties: {
-      type: "object",
-      properties: {
-        bounds,
-        display: {
-          type: "number",
+    properties: {
+      layers: {
+        type: "object",
+        additionalProperties: {
+          type: "object",
+          properties: {
+            bounds,
+            display: {
+              type: "number",
+            },
+            url: {
+              type: "string",
+            },
+            screen: {
+              type: "number",
+            },
+            title: {
+              type: "string",
+            },
+            visible: {
+              type: "boolean",
+            },
+            settingsURL: {
+              type: "string",
+            },
+          },
         },
-        url: {
-          type: "string",
-        },
-        screen: {
-          type: "number",
-        },
-        visible: {
-          type: "boolean",
-        },
+      },
+      selectedLayerID: {
+        type: "string",
       },
     },
   },

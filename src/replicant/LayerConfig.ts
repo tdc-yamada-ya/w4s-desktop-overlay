@@ -7,6 +7,8 @@ export type LayerConfig = {
   index?: number;
   layoutingMode?: boolean;
   opacity?: number;
+  title?: string;
   url?: string;
+  settingsURL?: string;
   visible?: boolean;
 };

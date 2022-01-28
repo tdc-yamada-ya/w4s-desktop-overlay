@@ -1,7 +1,7 @@
 import {LayerConfig} from "../../replicant/LayerConfig";
 
 export type Layer = {
-  apply(c: LayerConfig): void;
+  apply(c: Partial<LayerConfig>): void;
   dispose(): void;
   reload(): void;
 };

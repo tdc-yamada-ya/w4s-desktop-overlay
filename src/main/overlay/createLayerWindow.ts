@@ -1,5 +1,6 @@
 import {BrowserWindow, session} from "electron";
 import {v4 as uuid} from "uuid";
+
 import {dev} from "../../dev";
 import {Bounds} from "../../replicant/Bounds";
 import {LayerWindow} from "./LayerWindow";
