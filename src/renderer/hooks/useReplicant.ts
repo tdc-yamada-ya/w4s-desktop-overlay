@@ -9,9 +9,19 @@ export const useReplicant = <TName extends keyof ReplicantMap & string>(
   const [value, setValue] = useState<ReplicantMap[TName]>();
 
   useEffect(() => {
-    const r = window.api.replicant(name);
-    const u = r.subscribe((n) => setValue(cloneDeep(n)));
-    return () => u();
+    let mounted = true;
+
+    const rep = window.api.replicant(name);
+
+    const unsubscribe = rep.subscribe((n) => {
+      if (!mounted) return;
+      setValue(cloneDeep(n));
+    });
+
+    return () => {
+      mounted = false;
+      unsubscribe();
+    };
   }, [name]);
 
   return value;

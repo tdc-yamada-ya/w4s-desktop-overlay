@@ -1,6 +1,5 @@
-import {merge} from "lodash";
-
 import {OverlayConfig} from "../replicant/OverlayConfig";
+import {updateLayerLayoutingMode} from "./updateLayerLayoutingMode";
 
 export const toggleLayerLayoutingMode = (
   o?: OverlayConfig,
@@ -8,13 +7,5 @@ export const toggleLayerLayoutingMode = (
 ): OverlayConfig | undefined => {
   if (id == null) return o;
 
-  const d: OverlayConfig = {
-    layers: {
-      [id]: {
-        layoutingMode: !o?.layers?.[id]?.layoutingMode,
-      },
-    },
-  };
-
-  return merge(o, d);
+  return updateLayerLayoutingMode(o, id, !o?.layers?.[id]?.layoutingMode);
 };

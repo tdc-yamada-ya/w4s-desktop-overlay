@@ -17,6 +17,6 @@ export const deleteLayer = (
           .map(([k, v], i) => [k, {...v, index: i}]),
       ),
     },
-    selectedLayerID: "",
+    selectedLayerID: o?.selectedLayerID === id ? "" : o?.selectedLayerID,
   };
 };

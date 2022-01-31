@@ -6,11 +6,11 @@ import {Bounds} from "../../replicant/Bounds";
 import {LayerWindow} from "./LayerWindow";
 
 export const createLayerWindow = ({
-  movable,
+  movable = false,
   onBounds,
 }: {
   movable?: boolean;
-  onBounds: (bounds: Bounds) => void;
+  onBounds?: (bounds: Bounds) => void;
 }): LayerWindow => {
   const ses = session.fromPartition(uuid());
 
@@ -20,6 +20,7 @@ export const createLayerWindow = ({
 
   const {
     alwaysOnTop,
+    closable,
     frame,
     fullscreen,
     resizable,
@@ -29,6 +30,7 @@ export const createLayerWindow = ({
   } = movable
     ? {
         alwaysOnTop: false,
+        closable: false,
         frame: true,
         fullscreen: false,
         resizable: true,
@@ -38,6 +40,7 @@ export const createLayerWindow = ({
       }
     : {
         alwaysOnTop: true,
+        closable: false,
         frame: false,
         fullscreen: true,
         resizable: false,
@@ -48,7 +51,7 @@ export const createLayerWindow = ({
 
   const w = new BrowserWindow({
     alwaysOnTop,
-    closable: false,
+    closable,
     frame,
     fullscreen,
     maximizable: false,
@@ -79,8 +82,8 @@ export const createLayerWindow = ({
 
   w.loadURL("about:blank");
 
-  w.on("moved", () => onBounds(w.getBounds()));
-  w.on("resized", () => onBounds(w.getBounds()));
+  w.on("moved", () => onBounds?.(w.getBounds()));
+  w.on("resized", () => onBounds?.(w.getBounds()));
 
   return {
     destroy() {

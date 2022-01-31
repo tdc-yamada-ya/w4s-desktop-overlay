@@ -1,3 +1,5 @@
+import {clone, isEqual, omitBy} from "lodash";
+
 import {Bounds} from "../../replicant/Bounds";
 import {LayerConfig} from "../../replicant/LayerConfig";
 import {Layer} from "./Layer";
@@ -9,13 +11,13 @@ export const createLayer = ({
   onBounds,
 }: {
   layer: LayerConfig;
-  onBounds: (bounds: Bounds) => void;
+  onBounds?: (bounds: Bounds) => void;
 }): Layer => {
   const create = (l: LayerConfig) => {
     const w: LayerWindow = createLayerWindow({
       movable: l.layoutingMode,
       onBounds(bounds) {
-        onBounds(bounds);
+        onBounds?.(bounds);
         cl.bounds = bounds;
       },
     });
@@ -30,43 +32,43 @@ export const createLayer = ({
   };
 
   let w: LayerWindow = create(layer);
-  const cl: LayerConfig = layer;
+  let cl: LayerConfig = layer;
 
   return {
     apply(l) {
-      if (l.layoutingMode != null) {
+      const d = omitBy(l, (v, k) =>
+        isEqual(cl[k as keyof LayerConfig], v),
+      ) as Partial<LayerConfig>;
+
+      if (d.layoutingMode != null) {
         w.destroy();
         w = create({
           ...cl,
           layoutingMode: l.layoutingMode,
         });
-        cl.layoutingMode = l.layoutingMode;
       }
 
-      if (l.audioMuted != null) {
-        w.setAudioMuted(l.audioMuted);
-        cl.audioMuted = l.audioMuted;
+      if (d.audioMuted != null) {
+        w.setAudioMuted(d.audioMuted);
       }
 
-      if (l.bounds != null) {
-        w.setBounds(l.bounds);
-        cl.bounds = l.bounds;
+      if (d.bounds != null) {
+        w.setBounds(d.bounds);
       }
 
-      if (l.opacity != null) {
-        w.setOpacity(l.opacity);
-        cl.opacity = l.opacity;
+      if (d.opacity != null) {
+        w.setOpacity(d.opacity);
       }
 
-      if (l.url != null) {
-        w.setURL(l.url);
-        cl.url = l.url;
+      if (d.url != null) {
+        w.setURL(d.url);
       }
 
-      if (l.visible != null) {
-        w.setVisible(l.visible);
-        cl.visible = l.visible;
+      if (d.visible != null) {
+        w.setVisible(d.visible);
       }
+
+      cl = clone(l);
     },
     dispose() {
       w.destroy();

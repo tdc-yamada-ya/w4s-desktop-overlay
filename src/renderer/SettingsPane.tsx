@@ -12,16 +12,22 @@ import {
 } from "@mui/material";
 import {ReactNode, useRef, useState} from "react";
 
-import {DeleteSelectedLayerButton} from "./DeleteSelectedLayerButton";
-import {ReloadSelectedLayerButton} from "./ReloadSelectedLayerButton";
-import {SelectedLayerSettingsURLTextField} from "./SelectedLayerSettingsURLTextField";
-import {SelectedLayerTitleTextField} from "./SelectedLayerTitleTextField";
-import {SelectedLayerURLTextField} from "./SelectedLayerURLTextField";
-import {ToggleSelectedLayerAudioMutedButton} from "./ToggleSelectedLayerAudioMutedButton";
-import {ToggleSelectedLayerLayoutingModeButton} from "./ToggleSelectedLayerLayoutingModeButton";
-import {ToggleSelectedLayerVisibleButton} from "./ToggleSelectedLayerVisibleButton";
+import {DeleteLayerButton} from "./DeleteLayerButton";
+import {DeleteLayerInputSection} from "./DeleteLayerInputSection";
+import {LayerBoundsInputSection} from "./LayerBoundsInputSection";
+import {LayerLayoutingModeInputSection} from "./LayerLayoutingModeInputSection";
+import {LayerOpacityInputSection} from "./LayerOpacityInputSection";
+import {LayerSettingsURLInputSection} from "./LayerSettingsURLInputSection";
+import {LayerTitleInputSection} from "./LayerTitleInputSection";
+import {LayerURLInputSection} from "./LayerURLInputSection";
+import {LayerVisibleInputSection} from "./LayerVisibleInputSection";
+import {ReloadLayerButton} from "./ReloadLayerButton";
+import {ToggleLayerAudioMutedButton} from "./ToggleLayerAudioMutedButton";
+import {ToggleLayerLayoutingModeButton} from "./ToggleLayerLayoutingModeButton";
+import {ToggleLayerVisibleButton} from "./ToggleLayerVisibleButton";
 import {WebSettingsFrame} from "./WebSettingsFrame";
 import {useSelectedLayer} from "./hooks/useSelectedLayer";
+import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
 
 const useSelectedLayerTitle = () => {
   const l = useSelectedLayer();
@@ -74,7 +80,7 @@ const SettingsTabs = () => {
         <Tab label='Web' />
       </Tabs>
       <Divider />
-      <Box sx={{flexGrow: 1}}>
+      <Box sx={{flexGrow: 1, overflow: "hidden"}}>
         <TabPanel tab={0} value={value}>
           <General />
         </TabPanel>
@@ -87,6 +93,8 @@ const SettingsTabs = () => {
 };
 
 const General = () => {
+  const id = useSelectedLayerID();
+
   return (
     <Box
       sx={{
@@ -109,23 +117,30 @@ const General = () => {
               width: "100%",
             }}
           >
-            <ReloadSelectedLayerButton />
-            <ToggleSelectedLayerVisibleButton />
-            <ToggleSelectedLayerAudioMutedButton />
-            <ToggleSelectedLayerLayoutingModeButton />
+            <ReloadLayerButton id={id} />
+            <ToggleLayerVisibleButton id={id} />
+            <ToggleLayerAudioMutedButton id={id} />
+            <ToggleLayerLayoutingModeButton id={id} />
             <Box sx={{flexGrow: 1}} />
-            <DeleteSelectedLayerButton />
+            <DeleteLayerButton id={id} />
           </Box>
         </Box>
         <Divider />
       </Box>
-      <Container sx={{margin: "0 auto", padding: "1rem"}} maxWidth='md'>
-        <Stack spacing={2}>
-          <SelectedLayerTitleTextField />
-          <SelectedLayerURLTextField />
-          <SelectedLayerSettingsURLTextField />
-        </Stack>
-      </Container>
+      <Box sx={{flexGrow: 1, overflow: "auto"}}>
+        <Container sx={{margin: "0 auto", padding: "1rem"}} maxWidth='md'>
+          <Stack spacing={4}>
+            <LayerTitleInputSection id={id} />
+            <LayerURLInputSection id={id} />
+            <LayerSettingsURLInputSection id={id} />
+            <LayerBoundsInputSection id={id} />
+            <LayerLayoutingModeInputSection id={id} />
+            <LayerOpacityInputSection id={id} />
+            <LayerVisibleInputSection id={id} />
+            <DeleteLayerInputSection id={id} />
+          </Stack>
+        </Container>
+      </Box>
     </Box>
   );
 };
@@ -178,6 +193,7 @@ export const SettingsPane = () => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        overflow: "hidden",
         width: "100%",
       }}
     >
@@ -186,7 +202,7 @@ export const SettingsPane = () => {
           <LayerTitle />
         </Box>
       </Box>
-      <Box sx={{flexGrow: 1}}>
+      <Box sx={{flexGrow: 1, overflow: "hidden"}}>
         <SettingsTabs />
       </Box>
     </Box>

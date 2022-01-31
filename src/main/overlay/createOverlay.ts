@@ -1,8 +1,5 @@
-import {isEqual, omitBy} from "lodash";
-
 import {Bounds} from "../../replicant/Bounds";
 import {LayerConfig} from "../../replicant/LayerConfig";
-import {OverlayConfig} from "../../replicant/OverlayConfig";
 import {Layer} from "./Layer";
 import {Overlay} from "./Overlay";
 import {createLayer} from "./createLayer";
@@ -10,25 +7,24 @@ import {createLayer} from "./createLayer";
 export const createOverlay = ({
   onBounds,
 }: {
-  onBounds: (id: string, bounds: Bounds) => void;
+  onBounds?: (id: string, bounds: Bounds) => void;
 }): Overlay => {
-  let config: OverlayConfig | undefined;
   const layers: {[id: string]: Layer} = {};
 
   const addLayer = (id: string, c: LayerConfig): void => {
     const l = createLayer({
       layer: c,
-      onBounds(bounds) {
-        onBounds(id, bounds);
+      onBounds(b) {
+        onBounds?.(id, b);
       },
     });
     layers[id] = l;
   };
 
-  const updateLayer = (id: string, nc: LayerConfig, oc: LayerConfig): void => {
+  const updateLayer = (id: string, c: LayerConfig): void => {
     const l = layers[id];
     if (l) {
-      l.apply(omitBy(nc, (v, k) => isEqual(oc[k as keyof LayerConfig], v)));
+      l.apply(c);
     }
   };
 
@@ -38,25 +34,24 @@ export const createOverlay = ({
     delete layers[id];
   };
 
-  const applyLayer = (id: string, nc?: LayerConfig, oc?: LayerConfig): void => {
-    if (!oc && nc) addLayer(id, nc);
-    else if (oc && nc) updateLayer(id, nc, oc);
-    else if (oc && !nc) deleteLayer(id);
-  };
-
   return {
-    apply(n) {
-      const oll = config?.layers ?? {};
-      const nll = n?.layers ?? {};
-      const oIds = Object.keys(oll) ?? [];
-      const nIds = Object.keys(nll) ?? [];
-      const ids = [...new Set([...oIds, ...nIds])];
+    apply(oc) {
+      const ids = new Set([
+        ...Object.keys(layers),
+        ...Object.keys(oc?.layers ?? {}),
+      ]);
 
-      for (const id of ids) {
-        applyLayer(id, nll[id], oll[id]);
+      for (const id of ids.values()) {
+        const l = layers[id];
+        const c = oc?.layers?.[id];
+        if (!l && c) {
+          addLayer(id, c);
+        } else if (l && c) {
+          updateLayer(id, c);
+        } else if (l && !c) {
+          deleteLayer(id);
+        }
       }
-
-      config = n;
     },
     reload(id) {
       layers[id]?.reload();
