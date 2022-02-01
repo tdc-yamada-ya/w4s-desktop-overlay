@@ -1,6 +1,5 @@
 import {IpcMainEvent, WebContents, app, ipcMain} from "electron";
 import {screen} from "electron";
-import {merge} from "lodash";
 import path from "path";
 
 import {createMainWindow} from "./createMainWindow";
@@ -9,11 +8,11 @@ import {createMessageSender} from "./lib/electron-message/createMessageSender";
 import {createMessageSubscriber} from "./lib/electron-message/createMessageSubscriber";
 import {createParentReplicant} from "./lib/electron-replicant/createParentReplicant";
 import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
+import {updateLayerBounds} from "./logic/updateLayerBounds";
 import {initReactDevtool} from "./main/initReactDevtool";
 import {openHelp} from "./main/openHelp";
 import {createOverlay} from "./main/overlay/createOverlay";
 import {MessageMap} from "./message/MessageMap";
-import {OverlayConfig} from "./replicant/OverlayConfig";
 import {ReplicantMap} from "./replicant/ReplicantMap";
 import {defaultStore} from "./replicant/store/defaultStore";
 
@@ -48,14 +47,7 @@ const init = async () => {
   const screenRep = repFactory.createReplicant("screen");
   const overlay = createOverlay({
     onBounds(id, bounds) {
-      const diff: OverlayConfig = {
-        layers: {
-          [id]: {
-            bounds,
-          },
-        },
-      };
-      overlayRep.set(merge(overlayRep.get(), diff));
+      overlayRep.set(updateLayerBounds(overlayRep.get(), id, bounds));
     },
   });
 

@@ -6,8 +6,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 
-import {deleteLayer} from "../logic/deleteLayer";
-import {updateOverlay} from "./replicant/updateOverlay";
+import {useDeleteLayer} from "./hooks/useDeleteLayer";
 
 export const DeleteLayerDialog = ({
   id,
@@ -18,10 +17,7 @@ export const DeleteLayerDialog = ({
   open: boolean;
   onClose: () => void;
 }) => {
-  const submit = () => {
-    updateOverlay((o) => deleteLayer(o, id));
-    onClose();
-  };
+  const del = useDeleteLayer(id);
 
   return (
     <Dialog open={open} fullWidth={true} maxWidth='sm' onClose={onClose}>
@@ -32,7 +28,14 @@ export const DeleteLayerDialog = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button variant='contained' color='error' onClick={submit}>
+        <Button
+          variant='contained'
+          color='error'
+          onClick={() => {
+            del();
+            onClose();
+          }}
+        >
           Delete
         </Button>
       </DialogActions>

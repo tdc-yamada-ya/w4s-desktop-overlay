@@ -15,7 +15,7 @@ export const Root = () => {
         }}
       >
         <App />
-        <Box sx={{bottom: "0.5rem", right: "0.5rem", position: "fixed"}}>
+        <Box sx={{top: "0.5rem", right: "0.5rem", position: "fixed"}}>
           <Version />
         </Box>
       </Box>

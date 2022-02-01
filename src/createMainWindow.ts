@@ -7,10 +7,7 @@ const destroyAllWindows = () =>
   BrowserWindow.getAllWindows().forEach((w) => w.destroy());
 
 export const createMainWindow = (): BrowserWindow => {
-  const alwaysOnTop = dev ? false : true;
-
   const w = new BrowserWindow({
-    alwaysOnTop,
     width: 1024,
     height: 768,
     webPreferences: {

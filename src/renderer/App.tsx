@@ -16,14 +16,15 @@ export const App = () => (
         gridTemplateColumns: "300px 1px 1fr",
         gridTemplateRows: "100%",
         height: "100%",
+        overflow: "hidden",
         width: "100%",
       }}
     >
-      <Box sx={{height: "100%", width: "100%"}}>
+      <Box>
         <SideNavigation />
       </Box>
       <Divider orientation='vertical' flexItem />
-      <Box sx={{height: "100%", width: "100%"}}>
+      <Box>
         <SettingsPane />
       </Box>
     </Box>
