@@ -21,6 +21,10 @@ build({
     linux: {
       category: "Utility",
     },
+    nsis: {
+      include: "build/installer.nsh",
+      perMachine: true,
+    },
   },
 })
   .then(() => console.log("Completed."))

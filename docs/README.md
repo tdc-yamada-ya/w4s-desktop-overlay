@@ -30,3 +30,22 @@ The app installer can be downloaded from GitHub Releases.
 ### Other
 
 - You can adjust the position of the layer from the Settings button and move to other display.
+
+## Open by Custom URL Scheme
+
+Clicking link that is starting `w4s-desktop-overlay:` in a browser will show a dialog box to add a layer.
+
+For example, a URL like the following:
+
+`w4s-desktop-overlay:type=direct&title=My%20Widget&url=https%3A%2F%2Fexample.com%2Fgraphics&settingsURL=https%3A%2F%2Fexample.com%2Fsettings`
+
+The URL after the colon is in query string format.
+
+### Query Parameters
+
+| Name | Description |
+| - | - |
+| type | Currently only "direct" is available. Which sets the layer information directly in the URL. |
+| url | Graphics URL |
+| settingsURL | Settings URL |
+| title | Layer Title |

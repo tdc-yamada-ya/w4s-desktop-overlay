@@ -69,7 +69,7 @@ export const SideLayerListItem = ({
         <Typography
           sx={{
             color: theme.palette.text.disabled,
-            fontSize: "0.85rem",
+            fontSize: "0.8rem",
             textOverflow: "ellipsis",
             overflow: "hidden",
             whiteSpace: "nowrap",

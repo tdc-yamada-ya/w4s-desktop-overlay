@@ -1,7 +1,7 @@
 {
   "name": "w4s-desktop-overlay",
   "description": "This is a desktop application for streamers that overlays web pages on your desktop.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/main.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "dev:webpack": "cross-env NODE_ENV=\"development\" webpack --progress",
     "dev:electron": "wait-on ./dist/index.html && cross-env NODE_ENV=\"development\" electron .",
     "format": "prettier \"**/*.{ts,tsx,json,html,yml,css,scss,md}\" --check --write",
+    "start": "cross-env NODE_ENV=\"development\" electron .",
     "test:types": "tsc -p tsconfig.main.json",
     "test:prettier": "prettier \"**/*.{ts,tsx,json,html,yml,css,scss,md}\" --check"
   },
@@ -27,6 +28,7 @@
     "electron-search-devtools": "^1.5.2",
     "electron-store": "^8.0.1",
     "lodash": "^4.17.21",
+    "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "uuid": "^8.3.2"
@@ -40,6 +42,7 @@
     "@trivago/prettier-plugin-sort-imports": "^3.1.1",
     "@types/mini-css-extract-plugin": "^2.4.0",
     "@types/node": "^17.0.8",
+    "@types/qs": "^6.9.7",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "babel-loader": "^8.2.3",

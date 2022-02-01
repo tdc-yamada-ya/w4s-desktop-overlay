@@ -1,5 +1,8 @@
+import {LayerConfig} from "../replicant/LayerConfig";
+
 export type MessageMap = {
-  reload: {data: string};
   help: {data: unknown};
+  openLayer: {data: LayerConfig};
+  reload: {data: string};
   version: {data: string};
 };

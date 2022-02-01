@@ -1,12 +1,14 @@
 import {merge} from "lodash";
 import {v4 as uuid} from "uuid";
 
+import {LayerConfig} from "../replicant/LayerConfig";
 import {OverlayConfig} from "../replicant/OverlayConfig";
 import {Screen} from "../replicant/ScreenConfig";
 
 export const addLayer = (
-  o: OverlayConfig | undefined,
-  s: Screen | undefined,
+  o?: OverlayConfig,
+  s?: Screen,
+  l?: LayerConfig,
 ): OverlayConfig => {
   const id = uuid();
   const display = 0;
@@ -16,12 +18,14 @@ export const addLayer = (
   const diff: OverlayConfig = {
     layers: {
       [id]: {
-        audioMuted: true,
-        bounds,
-        display,
+        audioMuted: l?.audioMuted ?? true,
+        bounds: l?.bounds ?? bounds,
+        display: l?.display ?? display,
         index,
         opacity: 0.3,
-        url: "",
+        settingsURL: l?.settingsURL ?? "",
+        title: l?.title ?? "",
+        url: l?.url ?? "",
         visible: true,
       },
     },

@@ -25,6 +25,8 @@ export const createChildReplicant = <
 
   const emitter = new EventEmitter();
 
+  emitter.setMaxListeners(Infinity);
+
   const channelNames = buildChannelNames(name);
 
   const get = () => snapshot;
