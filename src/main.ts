@@ -8,6 +8,7 @@ import {createMessageSubscriber} from "./lib/electron-message/createMessageSubsc
 import {createParentReplicant} from "./lib/electron-replicant/createParentReplicant";
 import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
 import {updateLayerBounds} from "./logic/updateLayerBounds";
+import {updateLayerLayoutingMode} from "./logic/updateLayerLayoutingMode";
 import {initDevtool} from "./main/debug/initDevtool";
 import {initReload} from "./main/debug/initReload";
 import {findAppProtocolArg} from "./main/findAppProtocolArg";
@@ -36,6 +37,9 @@ const init = async () => {
   const overlay = createOverlay({
     onBounds(id, bounds) {
       overlayRep.set(updateLayerBounds(overlayRep.get(), id, bounds));
+    },
+    onCommitBounds(id) {
+      overlayRep.set(updateLayerLayoutingMode(overlayRep.get(), id, false));
     },
   });
 

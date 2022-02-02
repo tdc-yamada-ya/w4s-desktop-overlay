@@ -8,9 +8,11 @@ import {LayerWindow} from "./LayerWindow";
 export const createLayerWindow = ({
   movable = false,
   onBounds,
+  onCommitBounds,
 }: {
   movable?: boolean;
   onBounds?: (bounds: Bounds) => void;
+  onCommitBounds?: () => void;
 }): LayerWindow => {
   const ses = session.fromPartition(uuid());
 
@@ -30,7 +32,7 @@ export const createLayerWindow = ({
   } = movable
     ? {
         alwaysOnTop: false,
-        closable: false,
+        closable: true,
         frame: true,
         fullscreen: false,
         resizable: true,
@@ -84,6 +86,10 @@ export const createLayerWindow = ({
 
   w.on("moved", () => onBounds?.(w.getBounds()));
   w.on("resized", () => onBounds?.(w.getBounds()));
+  w.on("close", (e) => {
+    e.preventDefault();
+    onCommitBounds?.();
+  });
 
   return {
     destroy() {

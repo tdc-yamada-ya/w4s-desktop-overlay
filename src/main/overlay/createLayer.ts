@@ -9,9 +9,11 @@ import {createLayerWindow} from "./createLayerWindow";
 export const createLayer = ({
   layer,
   onBounds,
+  onCommitBounds,
 }: {
   layer: LayerConfig;
   onBounds?: (bounds: Bounds) => void;
+  onCommitBounds?: () => void;
 }): Layer => {
   const create = (l: LayerConfig) => {
     const w: LayerWindow = createLayerWindow({
@@ -19,6 +21,9 @@ export const createLayer = ({
       onBounds(bounds) {
         onBounds?.(bounds);
         cl.bounds = bounds;
+      },
+      onCommitBounds() {
+        onCommitBounds?.();
       },
     });
 

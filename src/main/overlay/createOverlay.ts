@@ -6,8 +6,10 @@ import {createLayer} from "./createLayer";
 
 export const createOverlay = ({
   onBounds,
+  onCommitBounds,
 }: {
   onBounds?: (id: string, bounds: Bounds) => void;
+  onCommitBounds?: (id: string) => void;
 }): Overlay => {
   const layers: {[id: string]: Layer} = {};
 
@@ -16,6 +18,9 @@ export const createOverlay = ({
       layer: c,
       onBounds(b) {
         onBounds?.(id, b);
+      },
+      onCommitBounds() {
+        onCommitBounds?.(id);
       },
     });
     layers[id] = l;
