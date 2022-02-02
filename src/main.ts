@@ -1,6 +1,5 @@
 import {IpcMainEvent, WebContents, app, ipcMain} from "electron";
 import {screen} from "electron";
-import path from "path";
 
 import {createMainWindow} from "./createMainWindow";
 import {dev} from "./dev";
@@ -9,30 +8,19 @@ import {createMessageSubscriber} from "./lib/electron-message/createMessageSubsc
 import {createParentReplicant} from "./lib/electron-replicant/createParentReplicant";
 import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
 import {updateLayerBounds} from "./logic/updateLayerBounds";
-import {initReactDevtool} from "./main/initReactDevtool";
+import {initDevtool} from "./main/debug/initDevtool";
+import {initReload} from "./main/debug/initReload";
+import {findAppProtocolArg} from "./main/findAppProtocolArg";
+import {initDefaultProtocolClient} from "./main/initDefaultProtocolClient";
 import {openHelp} from "./main/openHelp";
 import {createOverlay} from "./main/overlay/createOverlay";
+import {parseAppProtocolArg} from "./main/parseAppProtocolArg";
 import {MessageMap} from "./message/MessageMap";
 import {ReplicantMap} from "./replicant/ReplicantMap";
 import {defaultStore} from "./replicant/store/defaultStore";
 
-if (dev) {
-  const execPath =
-    process.platform === "win32"
-      ? "../node_modules/electron/dist/electron.exe"
-      : "../node_modules/.bin/electron";
-
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require("electron-reload")(__dirname, {
-    electron: path.resolve(__dirname, execPath),
-    appArgv: process.argv,
-    forceHardReset: true,
-    hardResetMethod: "exit",
-  });
-}
-
 const init = async () => {
-  if (dev) await initReactDevtool();
+  if (dev) await initDevtool();
 
   const mainWindow = createMainWindow();
   const repFactory = createCachedReplicantFactory<ReplicantMap>({
@@ -77,17 +65,54 @@ const init = async () => {
   msgSubscriber.on("version", () =>
     msgSender.send("version", app.getVersion()),
   );
+
+  const processAppProtocolArg = (argv: string[]) => {
+    const q = parseAppProtocolArg(findAppProtocolArg(argv));
+    if (q) {
+      mainWindow.show();
+
+      if (q.type === "direct") {
+        msgSender.send("openLayer", {
+          settingsURL: q.settingsURL,
+          title: q.title,
+          url: q.url,
+        });
+      }
+    }
+  };
+
+  app.on("second-instance", (_, argv) => processAppProtocolArg(argv));
+
+  mainWindow.webContents.once("did-finish-load", () =>
+    processAppProtocolArg(process.argv),
+  );
 };
 
 const quit = () => app.quit();
 
-const disableNavigate = (_: unknown, contents: WebContents) =>
+const disableNavigate = (contents: WebContents) =>
   contents.on("will-navigate", (event: Event) => event.preventDefault());
 
-const disableOpenWindow = (_: unknown, contents: WebContents) =>
+const disableOpenWindow = (contents: WebContents) =>
   contents.setWindowOpenHandler(() => ({action: "deny"}));
 
-app.on("web-contents-created", disableNavigate);
-app.on("web-contents-created", disableOpenWindow);
-app.whenReady().then(init);
-app.once("window-all-closed", quit);
+const main = () => {
+  const gotTheLock = app.requestSingleInstanceLock();
+
+  if (!gotTheLock) {
+    console.log("This app is already up and running.");
+    app.quit();
+    return;
+  }
+
+  if (dev) initReload();
+
+  initDefaultProtocolClient();
+
+  app.on("web-contents-created", (_, c) => disableNavigate(c));
+  app.on("web-contents-created", (_, c) => disableOpenWindow(c));
+  app.whenReady().then(init);
+  app.once("window-all-closed", quit);
+};
+
+main();

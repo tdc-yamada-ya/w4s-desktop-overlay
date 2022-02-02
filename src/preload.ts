@@ -6,6 +6,7 @@ import {createMessageSubscriber} from "./lib/electron-message/createMessageSubsc
 import {createChildReplicant} from "./lib/electron-replicant/createChildReplicant";
 import {createCachedReplicantFactory} from "./lib/electron-replicant/createReplicantCache";
 import {MessageMap} from "./message/MessageMap";
+import {LayerConfig} from "./replicant/LayerConfig";
 import {ReplicantMap} from "./replicant/ReplicantMap";
 
 const repFactory = createCachedReplicantFactory<ReplicantMap>({
@@ -33,6 +34,12 @@ const api: API = {
     msgSubscriber.on("version", l);
     msgSender.send("version");
     return () => msgSubscriber.off("version", l);
+  },
+
+  subscribeOpenLayer: (listener) => {
+    const l = (_: unknown, v: LayerConfig) => listener(v);
+    msgSubscriber.on("openLayer", l);
+    return () => msgSubscriber.off("openLayer", l);
   },
 };
 

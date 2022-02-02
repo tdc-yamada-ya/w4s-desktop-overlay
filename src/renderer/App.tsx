@@ -1,5 +1,6 @@
 import {Box, Divider} from "@mui/material";
 
+import {OpenLayerDialog} from "./OpenLayerDialog";
 import {SettingsPane} from "./SettingsPane";
 import {SideNavigation} from "./SideNavigation";
 
@@ -27,6 +28,7 @@ export const App = () => (
       <Box>
         <SettingsPane />
       </Box>
+      <OpenLayerDialog />
     </Box>
   </Box>
 );
