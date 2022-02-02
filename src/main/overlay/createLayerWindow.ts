@@ -60,7 +60,7 @@ export const createLayerWindow = ({
     minimizable: false,
     resizable,
     skipTaskbar,
-    opacity: 0.8,
+    opacity: 0.9,
     show: false,
     transparent,
     webPreferences: {
@@ -82,7 +82,7 @@ export const createLayerWindow = ({
 
   if (dev) w.webContents.openDevTools({mode: "detach"});
 
-  w.loadURL("about:blank");
+  w.loadFile("dist/layer.html");
 
   w.on("moved", () => onBounds?.(w.getBounds()));
   w.on("resized", () => onBounds?.(w.getBounds()));
@@ -105,10 +105,14 @@ export const createLayerWindow = ({
       w.setBounds(v);
     },
     setOpacity(v) {
-      w.setOpacity(movable ? 0.8 : v);
+      w.setOpacity(movable ? 0.9 : v);
     },
     setURL(v) {
-      w.loadURL(v);
+      if (v) {
+        w.loadURL(v);
+      } else {
+        w.loadFile("dist/layer.html");
+      }
     },
     setVisible(v) {
       if (v) w.show();

@@ -1,33 +1,19 @@
 import {Box, ButtonBase, Typography, useTheme} from "@mui/material";
 
 import {setSelectedLayerID} from "../logic/setSelectedLayerID";
-import {LayerConfig} from "../replicant/LayerConfig";
 import {LayerOpacitySlider} from "./LayerOpacitySlider";
 import {ToggleLayerVisibleButton} from "./ToggleLayerVisibleButton";
-import {useOverlay} from "./hooks/useOverlay";
+import {useLayer} from "./hooks/useLayer";
+import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
 import {updateOverlay} from "./replicant/updateOverlay";
 
-const useSelectedLayerID = () => {
-  const overlay = useOverlay();
-  return overlay?.selectedLayerID;
-};
-
-const useSelected = (id: string) => {
-  const selectedLayerID = useSelectedLayerID();
-  return id === selectedLayerID;
-};
-
-export const SideLayerListItem = ({
-  id,
-  layer,
-}: {
-  id: string;
-  layer: LayerConfig;
-}) => {
-  const selected = useSelected(id);
+export const LayerListItem = ({id}: {id: string}) => {
+  const selectedID = useSelectedLayerID();
+  const layer = useLayer(id);
   const theme = useTheme();
-  const title = layer.title || "No Title";
-  const url = layer.url || "No URL";
+  const selected = id === selectedID;
+  const title = layer?.title || "No Title";
+  const url = layer?.url || "No URL";
 
   return (
     <Box

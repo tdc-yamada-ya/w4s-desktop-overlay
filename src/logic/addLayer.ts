@@ -5,6 +5,9 @@ import {LayerConfig} from "../replicant/LayerConfig";
 import {OverlayConfig} from "../replicant/OverlayConfig";
 import {Screen} from "../replicant/ScreenConfig";
 
+const width = 640;
+const height = 480;
+
 export const addLayer = (
   o?: OverlayConfig,
   s?: Screen,
@@ -12,16 +15,29 @@ export const addLayer = (
 ): OverlayConfig => {
   const id = uuid();
   const display = 0;
-  const bounds = s?.displays?.[display]?.bounds;
+
+  const b = s?.displays?.[display]?.bounds;
+  const bx = b?.x ?? 0;
+  const by = b?.y ?? 0;
+  const bw = b?.width ?? width;
+  const bh = b?.height ?? height;
+
+  const bounds = {
+    x: bx + (bw - width) / 2,
+    y: by + (bh - height) / 2,
+    width,
+    height,
+  };
   const index = Object.keys(o?.layers || {}).length;
 
   const diff: OverlayConfig = {
     layers: {
       [id]: {
-        audioMuted: l?.audioMuted ?? true,
-        bounds: l?.bounds ?? bounds,
-        display: l?.display ?? display,
+        audioMuted: true,
+        bounds,
+        display,
         index,
+        layoutingMode: true,
         opacity: 0.3,
         settingsURL: l?.settingsURL ?? "",
         title: l?.title ?? "",

@@ -1,8 +1,8 @@
 import {Box, Skeleton, Stack, Typography, useTheme} from "@mui/material";
 
 import {AddLayerButton} from "./AddLayerButton";
-import {SideLayerListItem} from "./SideLayerListItem";
-import {useOverlay} from "./hooks/useOverlay";
+import {LayerListItem} from "./LayerListItem";
+import {useLayers} from "./hooks/useLayers";
 
 const Loading = () => (
   <Stack sx={{margin: "1rem"}} spacing={2}>
@@ -12,7 +12,7 @@ const Loading = () => (
   </Stack>
 );
 
-const NoLayers = () => {
+const Guide = () => {
   const theme = useTheme();
 
   return (
@@ -32,24 +32,17 @@ const NoLayers = () => {
   );
 };
 
-export const SideLayerList = () => {
-  const overlay = useOverlay();
-  const layers = overlay?.layers;
-  const entries =
-    layers &&
-    Object.entries(layers).sort(
-      ([, {index: a}], [, {index: b}]) => (a ?? 0) - (b ?? 0),
-    );
-
-  return entries == null ? (
+export const LayerList = () => {
+  const layers = useLayers({sort: true});
+  return layers == null ? (
     <Loading />
-  ) : entries.length === 0 ? (
-    <NoLayers />
+  ) : layers.length === 0 ? (
+    <Guide />
   ) : (
     <Stack>
-      {entries.map(([id, layer]) => (
+      {layers.map(([id]) => (
         <Box key={id}>
-          <SideLayerListItem id={id} layer={layer} />
+          <LayerListItem id={id} />
         </Box>
       ))}
     </Stack>

@@ -37,7 +37,7 @@ export const createLayer = ({
   };
 
   let w: LayerWindow = create(layer);
-  let cl: LayerConfig = layer;
+  let cl: LayerConfig = clone(layer);
 
   return {
     apply(l) {

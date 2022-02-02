@@ -12,7 +12,7 @@ const useValue = (id?: string) => {
   return layer?.layoutingMode;
 };
 
-const Field = ({id}: {id?: string}) => {
+export const LayerLayoutingModeField = ({id}: {id?: string}) => {
   const [value, setValue] = useState(false);
   const currentValue = useValue(id);
   const update = useUpdateLayerLayoutingMode(id);
@@ -43,6 +43,6 @@ export const LayerLayoutingModeInputSection = ({id}: {id?: string}) => (
     label='Switch Layouting Mode'
     description='If you want to change bounds of a layer directly by dragging and dropping, activate the layout mode.'
   >
-    <Field id={id} />
+    <LayerLayoutingModeField id={id} />
   </InputSection>
 );
