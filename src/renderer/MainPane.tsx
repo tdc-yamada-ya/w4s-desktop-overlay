@@ -70,11 +70,14 @@ const Guide = () => {
         flexDirection: "column",
         gap: "0.5rem",
         height: "100%",
+        overflow: "hidden",
         width: "100%",
       }}
     >
       <GeneralToolbar id={id} />
-      <FirstSteps id={id} />
+      <Box sx={{flexGrow: 1, overflow: "auto"}}>
+        <FirstSteps id={id} />
+      </Box>
     </Box>
   );
 };

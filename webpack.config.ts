@@ -75,43 +75,31 @@ const preload: Configuration = {
   },
 };
 
-const renderer = ({
-  file,
-  name,
-  template,
-}: {
-  file: string;
-  name: string;
-  template: string;
-}): Configuration => ({
+const renderer: Configuration = {
   ...common,
   target: "web",
   entry: {
-    [name]: `./src/${name}.tsx`,
+    renderer: `./src/renderer.tsx`,
+    layer: `./src/layer.tsx`,
   },
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
+      chunks: ["renderer"],
       minify: !isDev,
       inject: "body",
-      filename: `${file}.html`,
-      template: `./src/${template}.html`,
+      filename: `index.html`,
+      template: `./src/index.html`,
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ["layer"],
+      minify: !isDev,
+      inject: "body",
+      filename: `layer.html`,
+      template: `./src/index.html`,
     }),
   ],
-});
+};
 
-const renderers = [
-  renderer({
-    file: "index",
-    name: "renderer",
-    template: "index",
-  }),
-  renderer({
-    file: "layer",
-    name: "layer",
-    template: "index",
-  }),
-];
-
-const config = isDev ? [...renderers] : [main, preload, ...renderers];
+const config = isDev ? [renderer] : [main, preload, renderer];
 export default config;
