@@ -8,20 +8,24 @@ const useValue = (id?: string) => {
   return layer?.url;
 };
 
-export const LayerURLInputSection = ({id}: {id?: string}) => {
+export const LayerURLField = ({id}: {id?: string}) => {
   const value = useValue(id);
   const update = useUpdateLayerURL(id);
 
   return (
-    <InputSection
-      label='Graphics URL'
-      description='Enter an URL of the web page you want to overlay on your desktop.'
-    >
-      <AutoSubmitTextField
-        value={value}
-        onSubmit={(value) => update(value)}
-        placeholder='https://example.com/graphics'
-      />
-    </InputSection>
+    <AutoSubmitTextField
+      value={value}
+      onSubmit={(value) => update(value)}
+      placeholder='https://example.com/graphics'
+    />
   );
 };
+
+export const LayerURLInputSection = ({id}: {id?: string}) => (
+  <InputSection
+    label='Graphics URL'
+    description='Enter an URL of the web page you want to overlay on your desktop.'
+  >
+    <LayerURLField id={id} />
+  </InputSection>
+);

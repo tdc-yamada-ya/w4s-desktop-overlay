@@ -9,7 +9,13 @@ const useValue = (id?: string) => {
   return layer?.opacity;
 };
 
-export const LayerOpacitySlider = ({id}: {id?: string}) => {
+export const LayerOpacitySlider = ({
+  id,
+  size,
+}: {
+  id?: string;
+  size?: "small";
+}) => {
   const [value, setValue] = useState(0);
   const currentValue = useValue(id);
   const update = useUpdateLayerOpacity(id);
@@ -18,6 +24,7 @@ export const LayerOpacitySlider = ({id}: {id?: string}) => {
 
   return (
     <Slider
+      size={size}
       sx={{width: "100%"}}
       value={value}
       onChange={(_, n) => setValue(n as number)}

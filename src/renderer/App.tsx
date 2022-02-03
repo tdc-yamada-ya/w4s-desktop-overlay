@@ -1,8 +1,8 @@
 import {Box, Divider} from "@mui/material";
 
+import {MainPane} from "./MainPane";
 import {OpenLayerDialog} from "./OpenLayerDialog";
-import {SettingsPane} from "./SettingsPane";
-import {SideNavigation} from "./SideNavigation";
+import {SidePane} from "./SidePane";
 
 export const App = () => (
   <Box
@@ -21,14 +21,10 @@ export const App = () => (
         width: "100%",
       }}
     >
-      <Box>
-        <SideNavigation />
-      </Box>
+      <SidePane />
       <Divider orientation='vertical' flexItem />
-      <Box>
-        <SettingsPane />
-      </Box>
-      <OpenLayerDialog />
+      <MainPane />
     </Box>
+    <OpenLayerDialog />
   </Box>
 );
