@@ -62,12 +62,12 @@ const GeneralPage = () => {
       <Box sx={{flexGrow: 1, overflow: "auto"}}>
         <Container sx={{margin: "0 auto", padding: "1rem"}} maxWidth='md'>
           <Stack spacing={4}>
-            <LayerLayoutingModeInputSection id={id} />
             <LayerTitleInputSection id={id} />
             <LayerURLInputSection id={id} />
             <LayerSettingsURLInputSection id={id} />
             <LayerBoundsInputSection id={id} />
             <LayerOpacityInputSection id={id} />
+            <LayerLayoutingModeInputSection id={id} />
             <LayerVisibleInputSection id={id} />
             <DeleteLayerInputSection id={id} />
           </Stack>
