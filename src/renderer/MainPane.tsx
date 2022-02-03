@@ -26,7 +26,7 @@ import {ReloadLayerButton} from "./ReloadLayerButton";
 import {ToggleLayerAudioMutedButton} from "./ToggleLayerAudioMutedButton";
 import {ToggleLayerLayoutingModeButton} from "./ToggleLayerLayoutingModeButton";
 import {ToggleLayerVisibleButton} from "./ToggleLayerVisibleButton";
-import {WebSettingsFrame} from "./WebSettingsFrame";
+import {WebSettingsFrame, WebSettingsFrameRef} from "./WebSettingsFrame";
 import {useIsLayerSelected} from "./hooks/useIsLayerSelected";
 import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
 import {useSelectedLayerTitle} from "./hooks/useSelectedLayerTitle";
@@ -115,7 +115,7 @@ const General = () => {
 
 const Web = () => {
   const [url, setURL] = useState("");
-  const ref = useRef<() => void>(null);
+  const ref = useRef<WebSettingsFrameRef>(null);
 
   return (
     <Box
@@ -139,7 +139,7 @@ const Web = () => {
               width: "100%",
             }}
           >
-            <IconButton onClick={() => ref.current?.()}>
+            <IconButton onClick={() => ref.current?.reload()}>
               <ReplayIcon />
             </IconButton>
             <InputBase sx={{flexGrow: 1}} disabled={true} value={url} />
