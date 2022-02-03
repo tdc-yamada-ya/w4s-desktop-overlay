@@ -3,6 +3,7 @@ import {Bounds} from "./Bounds";
 export type LayerConfig = {
   audioMuted?: boolean;
   bounds?: Bounds;
+  css?: string;
   display?: number;
   index?: number;
   layoutingMode?: boolean;

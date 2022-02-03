@@ -76,7 +76,7 @@ export const createLayerWindow = ({
 
   w.webContents.on("did-finish-load", () => {
     w.webContents.insertCSS(
-      "html, body { background-color: transparent !important; overflow: hidden !important; }",
+      "html, body, body:before { background: transparent !important; overflow: hidden !important; }",
     );
   });
 
@@ -91,9 +91,17 @@ export const createLayerWindow = ({
     onCommitBounds?.();
   });
 
+  let cssKey: string | undefined;
+
   return {
     destroy() {
       w.destroy();
+    },
+    async insertCSS(v) {
+      if (cssKey != null) {
+        w.webContents.removeInsertedCSS(cssKey);
+      }
+      cssKey = await w.webContents.insertCSS(v);
     },
     reload() {
       w.reload();

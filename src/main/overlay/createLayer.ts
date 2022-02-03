@@ -32,6 +32,7 @@ export const createLayer = ({
     w.setOpacity(l.opacity ?? 0);
     w.setURL(l.url ?? "about:blank");
     w.setVisible(l.visible ?? false);
+    w.insertCSS(l.css ?? "");
 
     return w;
   };
@@ -71,6 +72,10 @@ export const createLayer = ({
 
       if (d.visible != null) {
         w.setVisible(d.visible);
+      }
+
+      if (d.css != null) {
+        w.insertCSS(d.css);
       }
 
       cl = clone(l);

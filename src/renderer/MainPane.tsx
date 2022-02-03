@@ -14,6 +14,7 @@ import {DeleteLayerInputSection} from "./DeleteLayerInputSection";
 import {ExternalSettings} from "./ExternalSettings";
 import {FirstSteps} from "./FirstSteps";
 import {LayerBoundsInputSection} from "./LayerBoundsInputSection";
+import {LayerCSSInputSection} from "./LayerCSSInputSection";
 import {LayerLayoutingModeInputSection} from "./LayerLayoutingModeInputSection";
 import {LayerOpacityInputSection} from "./LayerOpacityInputSection";
 import {LayerSettingsURLInputSection} from "./LayerSettingsURLInputSection";
@@ -69,6 +70,7 @@ const GeneralPage = () => {
             <LayerOpacityInputSection id={id} />
             <LayerLayoutingModeInputSection id={id} />
             <LayerVisibleInputSection id={id} />
+            <LayerCSSInputSection id={id} />
             <DeleteLayerInputSection id={id} />
           </Stack>
         </Container>

@@ -14,18 +14,22 @@ const useTimeout = (callback: () => void, timeout: number) => {
 };
 
 export const AutoSubmitTextField = ({
+  multiline,
   value: currentValue,
   helperText,
   label,
   onSubmit,
   placeholder,
+  rows,
   delay = 1000,
 }: {
+  multiline?: boolean;
   value?: string;
   helperText?: string;
   label?: string;
   onSubmit: (value: string) => void;
   placeholder?: string;
+  rows?: number;
   delay?: number;
 }) => {
   const [value, setValue] = useState("");
@@ -50,12 +54,14 @@ export const AutoSubmitTextField = ({
       <TextField
         sx={{width: "100%"}}
         label={label}
+        multiline={multiline}
         value={value}
-        variant='standard'
+        variant={multiline ? "outlined" : "standard"}
         helperText={helperText}
         onChange={(e) => setValue(e.target.value)}
         onBlur={() => submitInternal()}
         placeholder={placeholder}
+        rows={rows}
       />
     </form>
   );
