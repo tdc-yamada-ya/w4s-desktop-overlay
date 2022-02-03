@@ -1,4 +1,5 @@
 import {
+  Button,
   Container,
   Stack,
   Step,
@@ -7,10 +8,20 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import {Box} from "@mui/system";
 
 import {LayerLayoutingModeField} from "./LayerLayoutingModeInputSection";
 import {LayerURLField} from "./LayerURLInputSection";
+import {useUpdateLayerLayoutingMode} from "./hooks/useUpdateLayerLayoutingMode";
+
+export const FinishLayerLayoutingButton = ({id}: {id?: string}) => {
+  const update = useUpdateLayerLayoutingMode(id);
+
+  return (
+    <Button variant='contained' onClick={() => update(false)}>
+      Finish
+    </Button>
+  );
+};
 
 export const FirstSteps = ({id}: {id?: string}) => {
   return (
@@ -37,14 +48,18 @@ export const FirstSteps = ({id}: {id?: string}) => {
           </StepContent>
         </Step>
         <Step active={true} expanded={true}>
-          <StepLabel>Click close button on layer window.</StepLabel>
+          <StepLabel>Finish layout.</StepLabel>
           <StepContent>
             <Stack spacing={2}>
-              <Box>
+              <Stack spacing={1}>
                 <Typography>
-                  Close this window to finalize the position of the layer.
+                  Close the window or click follwing button to finalize the
+                  position of the layer.
                 </Typography>
-              </Box>
+                <Stack direction='row'>
+                  {id ? <FinishLayerLayoutingButton id={id} /> : null}
+                </Stack>
+              </Stack>
               <Stack spacing={1}>
                 <Typography>
                   If you want to move it again, enable the layout mode.

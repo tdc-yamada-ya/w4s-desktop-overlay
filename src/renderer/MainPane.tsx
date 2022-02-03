@@ -31,18 +31,38 @@ import {useIsLayerSelected} from "./hooks/useIsLayerSelected";
 import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
 import {useSelectedLayerTitle} from "./hooks/useSelectedLayerTitle";
 
-const Guide = () => {
-  const id = useSelectedLayerID();
+const GeneralToolbar = ({id}: {id?: string}) => {
   return (
-    <Box sx={{height: "100%", overflow: "auto", width: "100%"}}>
-      <FirstSteps id={id} />
+    <Box sx={{width: "100%"}}>
+      <Box
+        sx={{
+          boxSizing: "border-box",
+          backgroundColor: "#eee",
+          padding: "0.5rem 1rem",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+          }}
+        >
+          <ReloadLayerButton id={id} />
+          <ToggleLayerVisibleButton id={id} />
+          <ToggleLayerAudioMutedButton id={id} />
+          <ToggleLayerLayoutingModeButton id={id} />
+          <Box sx={{flexGrow: 1}} />
+          <DeleteLayerButton id={id} />
+        </Box>
+      </Box>
+      <Divider />
     </Box>
   );
 };
 
-const General = () => {
+const Guide = () => {
   const id = useSelectedLayerID();
-
   return (
     <Box
       sx={{
@@ -53,28 +73,25 @@ const General = () => {
         width: "100%",
       }}
     >
-      <Box>
-        <Box sx={{backgroundColor: "#eee"}}>
-          <Box
-            sx={{
-              boxSizing: "border-box",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              padding: "0.5rem 1rem",
-              width: "100%",
-            }}
-          >
-            <ReloadLayerButton id={id} />
-            <ToggleLayerVisibleButton id={id} />
-            <ToggleLayerAudioMutedButton id={id} />
-            <ToggleLayerLayoutingModeButton id={id} />
-            <Box sx={{flexGrow: 1}} />
-            <DeleteLayerButton id={id} />
-          </Box>
-        </Box>
-        <Divider />
-      </Box>
+      <GeneralToolbar id={id} />
+      <FirstSteps id={id} />
+    </Box>
+  );
+};
+
+const General = () => {
+  const id = useSelectedLayerID();
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+        height: "100%",
+        width: "100%",
+      }}
+    >
+      <GeneralToolbar id={id} />
       <Box sx={{flexGrow: 1, overflow: "auto"}}>
         <Container sx={{margin: "0 auto", padding: "1rem"}} maxWidth='md'>
           <Stack spacing={4}>
