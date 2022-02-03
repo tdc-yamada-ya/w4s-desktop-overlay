@@ -8,20 +8,26 @@ const useValue = (id?: string) => {
   return layer?.settingsURL;
 };
 
-export const LayerSettingsURLInputSection = ({id}: {id?: string}) => {
+export const LayerSettingsURLField = ({id}: {id?: string}) => {
   const value = useValue(id);
   const update = useUpdateLayerSettingsURL(id);
 
   return (
+    <AutoSubmitTextField
+      value={value}
+      onSubmit={(value) => update(value)}
+      placeholder='https://example.com/settings'
+    />
+  );
+};
+
+export const LayerSettingsURLInputSection = ({id}: {id?: string}) => {
+  return (
     <InputSection
       label='Settings URL'
-      description='If a URL exists for the configuration, you can set it; if you set a URL, you can view the configuration page from the "Web" tab.'
+      description='If a URL exists for the configuration, you can set it; if you set a URL, you can view the configuration page from the "External" tab.'
     >
-      <AutoSubmitTextField
-        value={value}
-        onSubmit={(value) => update(value)}
-        placeholder='https://example.com/settings'
-      />
+      <LayerSettingsURLField id={id} />
     </InputSection>
   );
 };

@@ -1,19 +1,17 @@
-import ReplayIcon from "@mui/icons-material/Replay";
 import {
   Box,
   Container,
   Divider,
-  IconButton,
-  InputBase,
   Stack,
   Tab,
   Tabs,
   Typography,
 } from "@mui/material";
-import {ReactNode, useRef, useState} from "react";
+import {ReactNode, useState} from "react";
 
 import {DeleteLayerButton} from "./DeleteLayerButton";
 import {DeleteLayerInputSection} from "./DeleteLayerInputSection";
+import {ExternalSettings} from "./ExternalSettings";
 import {FirstSteps} from "./FirstSteps";
 import {LayerBoundsInputSection} from "./LayerBoundsInputSection";
 import {LayerLayoutingModeInputSection} from "./LayerLayoutingModeInputSection";
@@ -25,43 +23,11 @@ import {LayerVisibleInputSection} from "./LayerVisibleInputSection";
 import {ReloadLayerButton} from "./ReloadLayerButton";
 import {ToggleLayerAudioMutedButton} from "./ToggleLayerAudioMutedButton";
 import {ToggleLayerLayoutingModeButton} from "./ToggleLayerLayoutingModeButton";
-import {ToggleLayerVisibleButton} from "./ToggleLayerVisibleButton";
-import {WebSettingsFrame, WebSettingsFrameRef} from "./WebSettingsFrame";
 import {useIsLayerSelected} from "./hooks/useIsLayerSelected";
 import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
 import {useSelectedLayerTitle} from "./hooks/useSelectedLayerTitle";
 
-const GeneralToolbar = ({id}: {id?: string}) => {
-  return (
-    <Box sx={{width: "100%"}}>
-      <Box
-        sx={{
-          boxSizing: "border-box",
-          backgroundColor: "#eee",
-          padding: "0.5rem 1rem",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "0.5rem",
-          }}
-        >
-          <ReloadLayerButton id={id} />
-          <ToggleLayerVisibleButton id={id} />
-          <ToggleLayerAudioMutedButton id={id} />
-          <ToggleLayerLayoutingModeButton id={id} />
-          <Box sx={{flexGrow: 1}} />
-          <DeleteLayerButton id={id} />
-        </Box>
-      </Box>
-      <Divider />
-    </Box>
-  );
-};
-
-const Guide = () => {
+const GuidePage = () => {
   const id = useSelectedLayerID();
   return (
     <Box
@@ -74,7 +40,6 @@ const Guide = () => {
         width: "100%",
       }}
     >
-      <GeneralToolbar id={id} />
       <Box sx={{flexGrow: 1, overflow: "auto"}}>
         <FirstSteps id={id} />
       </Box>
@@ -82,7 +47,7 @@ const Guide = () => {
   );
 };
 
-const General = () => {
+const GeneralPage = () => {
   const id = useSelectedLayerID();
   return (
     <Box
@@ -94,7 +59,6 @@ const General = () => {
         width: "100%",
       }}
     >
-      <GeneralToolbar id={id} />
       <Box sx={{flexGrow: 1, overflow: "auto"}}>
         <Container sx={{margin: "0 auto", padding: "1rem"}} maxWidth='md'>
           <Stack spacing={4}>
@@ -109,45 +73,6 @@ const General = () => {
           </Stack>
         </Container>
       </Box>
-    </Box>
-  );
-};
-
-const Web = () => {
-  const [url, setURL] = useState("");
-  const ref = useRef<WebSettingsFrameRef>(null);
-
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-      }}
-    >
-      <Box>
-        <Box sx={{backgroundColor: "#eee"}}>
-          <Box
-            sx={{
-              alignItems: "center",
-              boxSizing: "border-box",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              padding: "0.5rem 1rem",
-              width: "100%",
-            }}
-          >
-            <IconButton onClick={() => ref.current?.reload()}>
-              <ReplayIcon />
-            </IconButton>
-            <InputBase sx={{flexGrow: 1}} disabled={true} value={url} />
-          </Box>
-        </Box>
-        <Divider />
-      </Box>
-      <WebSettingsFrame ref={ref} onChange={(url) => setURL(url)} />
     </Box>
   );
 };
@@ -185,21 +110,33 @@ const LayerSettingsTabs = () => {
       <Tabs sx={{margin: "0 1rem"}} value={tab} onChange={(_, v) => setTab(v)}>
         <Tab label='Guide' value='guide' />
         <Tab label='General' value='general' />
-        <Tab label='Web' value='web' />
+        <Tab label='External' value='external' />
       </Tabs>
       <Divider />
       <Box sx={{flexGrow: 1, overflow: "hidden"}}>
         <LayerSettingsTabPanel tab='guide' value={tab}>
-          <Guide />
+          <GuidePage />
         </LayerSettingsTabPanel>
         <LayerSettingsTabPanel tab='general' value={tab}>
-          <General />
+          <GeneralPage />
         </LayerSettingsTabPanel>
-        <LayerSettingsTabPanel tab='web' value={tab}>
-          <Web />
+        <LayerSettingsTabPanel tab='external' value={tab}>
+          <ExternalSettings />
         </LayerSettingsTabPanel>
       </Box>
     </Box>
+  );
+};
+
+const Toolbar = () => {
+  const id = useSelectedLayerID();
+  return (
+    <Stack direction='row' spacing={0}>
+      <ReloadLayerButton id={id} />
+      <ToggleLayerAudioMutedButton id={id} />
+      <ToggleLayerLayoutingModeButton id={id} />
+      <DeleteLayerButton id={id} />
+    </Stack>
   );
 };
 
@@ -209,6 +146,17 @@ const LayerTitle = () => {
     <Typography sx={{fontSize: "1.2rem", fontWeight: "bold"}}>
       {title}
     </Typography>
+  );
+};
+
+const Head = () => {
+  return (
+    <Box sx={{display: "flex", margin: "0.5rem 0.5rem 0 1rem"}}>
+      <Box sx={{flexGrow: 1}}>
+        <LayerTitle />
+      </Box>
+      <Toolbar />
+    </Box>
   );
 };
 
@@ -222,9 +170,7 @@ const LayerSettings = () => (
       width: "100%",
     }}
   >
-    <Box sx={{padding: "0.5rem 1rem 0 1rem"}}>
-      <LayerTitle />
-    </Box>
+    <Head />
     <Box sx={{flexGrow: 1, overflow: "hidden"}}>
       <LayerSettingsTabs />
     </Box>
