@@ -1,10 +1,6 @@
-import {LayerConfig} from "./LayerConfig";
-
-type LayerMap = {
-  [key: string]: LayerConfig;
-};
+import {Layers} from "./Layers";
 
 export type OverlayConfig = {
-  layers?: LayerMap;
+  layers?: Layers;
   selectedLayerID?: string;
 };

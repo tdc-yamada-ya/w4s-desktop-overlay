@@ -25,6 +25,8 @@ build({
       include: "build/installer.nsh",
       perMachine: true,
     },
+    // HACK: Configured electron-builder not to build native dependencies, since building node-canvas would cause errors.
+    npmRebuild: false,
   },
 })
   .then(() => console.log("Completed."))

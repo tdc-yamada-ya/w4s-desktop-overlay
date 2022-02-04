@@ -1,24 +1,35 @@
-import {Divider} from "@mui/material";
+import {Divider, Stack} from "@mui/material";
 import {Box} from "@mui/system";
 
 import {AddLayerButton} from "./AddLayerButton";
 import {HelpButton} from "./HelpButton";
 import {LayerList} from "./LayerList";
+import {OpenLayoutButton} from "./OpenLayoutButton";
 
 const BottomBar = () => (
-  <Box
-    sx={{
-      alignItems: "center",
-      boxSizing: "border-box",
-      display: "flex",
-      justifyContent: "center",
-      padding: "0 1rem",
-    }}
-  >
-    <AddLayerButton />
-    <Box sx={{flexGrow: 1}} />
-    <HelpButton />
-  </Box>
+  <Stack sx={{boxSizing: "border-box", padding: "0.5rem"}} spacing={0}>
+    <Box
+      sx={{
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <OpenLayoutButton />
+      <Box sx={{flexGrow: 1}} />
+    </Box>
+    <Box
+      sx={{
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <AddLayerButton />
+      <Box sx={{flexGrow: 1}} />
+      <HelpButton />
+    </Box>
+  </Stack>
 );
 
 export const SidePane = () => (
@@ -27,7 +38,7 @@ export const SidePane = () => (
       background: "#eceff1",
       display: "grid",
       gridTemplateColumns: "100%",
-      gridTemplateRows: "1fr 1px 4rem",
+      gridTemplateRows: "1fr 1px min-content",
       height: "100%",
       width: "100%",
     }}

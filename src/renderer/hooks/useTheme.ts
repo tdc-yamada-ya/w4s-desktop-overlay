@@ -13,7 +13,7 @@ export const useTheme = () => {
         },
         typography: {
           fontSize: 12,
-          fontFamily: "'Noto Sans JP', Roboto, sans-serif;",
+          fontFamily: "'Noto Sans JP', Roboto, sans-serif",
         },
       }),
     [],

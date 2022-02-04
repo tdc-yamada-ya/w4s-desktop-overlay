@@ -147,8 +147,13 @@ export const createLayerWindow = ({
     setAudioMuted(v) {
       w.webContents.setAudioMuted(v);
     },
-    setBounds(v) {
-      w.setBounds(v);
+    setBounds({x, y, height, width}) {
+      w.setBounds({
+        x: Math.floor(x ?? 0),
+        y: Math.floor(y ?? 0),
+        height: Math.floor(height ?? 0),
+        width: Math.floor(width ?? 0),
+      });
     },
     setOpacity(v) {
       w.setOpacity(movable ? 0.9 : v);

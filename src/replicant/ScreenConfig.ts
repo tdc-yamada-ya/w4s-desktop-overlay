@@ -1,5 +1,5 @@
-import {Display} from "./Display";
+import {Displays} from "./Displays";
 
 export type Screen = {
-  displays?: Display[];
+  displays?: Displays;
 };
