@@ -11,7 +11,5 @@ export interface API {
 
   help: () => void;
 
-  subscribeVersion: (listener: (version: string) => void) => () => void;
-
   subscribeOpenLayer: (listener: (layer: LayerConfig) => void) => () => void;
 }

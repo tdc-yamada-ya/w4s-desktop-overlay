@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
     isMaximized = v;
   });
 
-  new Titlebar({
+  const titlebar = new Titlebar({
     backgroundColor: Color.fromHex("#009688"),
     onMinimize() {
       msgSender.send("titlebar:minimize");
@@ -48,6 +48,12 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     },
   });
+
+  msgSubscriber.on("version", (_, v) => {
+    titlebar.updateTitle("W4S Overlay Desktop " + v);
+  });
+
+  msgSender.send("version");
 });
 
 const api: API = {
@@ -59,12 +65,6 @@ const api: API = {
   },
   help() {
     msgSender.send("help");
-  },
-  subscribeVersion(listener) {
-    const l = (_: unknown, v: string) => listener(v);
-    msgSubscriber.on("version", l);
-    msgSender.send("version");
-    return () => msgSubscriber.off("version", l);
   },
   subscribeOpenLayer(listener) {
     const l = (_: unknown, v: LayerConfig) => listener(v);
