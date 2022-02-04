@@ -5,6 +5,51 @@ import {dev} from "../../dev";
 import {Bounds} from "../../replicant/Bounds";
 import {LayerWindow} from "./LayerWindow";
 
+const createSetCSS = (w: BrowserWindow) => {
+  let key = "";
+  let css = "";
+
+  const refresh = () => {
+    w.webContents.removeInsertedCSS(key);
+    w.webContents.insertCSS(css).then((v) => (key = v));
+  };
+
+  w.webContents.on("dom-ready", () => {
+    refresh();
+  });
+
+  return (v: string) => {
+    css = v;
+    refresh();
+  };
+};
+
+const createSetVisible = (w: BrowserWindow) => {
+  let visible = false;
+  let ready = false;
+
+  const refresh = () => {
+    if (ready && visible) w.show();
+    else w.hide();
+  };
+
+  w.webContents.on("did-start-navigation", (_e, _u, isInPlace, isMainFrame) => {
+    if (isInPlace || !isMainFrame) return;
+    ready = false;
+    refresh();
+  });
+
+  w.webContents.on("did-finish-load", () => {
+    ready = true;
+    refresh();
+  });
+
+  return (v: boolean) => {
+    visible = v;
+    refresh();
+  };
+};
+
 export const createLayerWindow = ({
   movable = false,
   onBounds,
@@ -91,18 +136,11 @@ export const createLayerWindow = ({
     onCommitBounds?.();
   });
 
-  let cssKey: string | undefined;
-
   return {
     destroy() {
       w.destroy();
     },
-    async insertCSS(v) {
-      if (cssKey != null) {
-        w.webContents.removeInsertedCSS(cssKey);
-      }
-      cssKey = await w.webContents.insertCSS(v);
-    },
+    setCSS: createSetCSS(w),
     reload() {
       w.reload();
     },
@@ -122,9 +160,6 @@ export const createLayerWindow = ({
         w.loadFile("dist/layer.html");
       }
     },
-    setVisible(v) {
-      if (v) w.show();
-      else w.hide();
-    },
+    setVisible: createSetVisible(w),
   };
 };

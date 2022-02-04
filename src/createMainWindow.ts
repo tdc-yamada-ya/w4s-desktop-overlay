@@ -8,8 +8,9 @@ const destroyAllWindows = () =>
 
 export const createMainWindow = (): BrowserWindow => {
   const w = new BrowserWindow({
-    width: 1024,
     height: 768,
+    titleBarStyle: "hidden",
+    width: 1024,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },

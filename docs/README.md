@@ -2,7 +2,7 @@
 
 This is a desktop application for streamers that overlays web pages on your desktop. W4S is an acronym for widgets for streamers.
 
-<img src="./images/icon.png" width="128">
+<img src="./images/icon-animated.svg" width="128">
 
 ![screenshot](./images/screenshot.jpg)
 

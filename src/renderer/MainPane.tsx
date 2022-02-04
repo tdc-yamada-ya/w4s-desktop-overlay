@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import {ReactNode, useState} from "react";
 
+import icon from "../../assets/icon-animated.svg";
 import {DeleteLayerButton} from "./DeleteLayerButton";
 import {DeleteLayerInputSection} from "./DeleteLayerInputSection";
 import {ExternalSettings} from "./ExternalSettings";
@@ -180,12 +181,29 @@ const LayerSettings = () => (
 );
 
 const Usage = () => (
-  <Box sx={{height: "100%", width: "100%"}}>
-    <Container sx={{margin: "2rem auto"}} maxWidth='sm'>
-      <Typography sx={{opacity: 0.6}}>
-        Select a layer to open the setting window. If no layer, add one.
-      </Typography>
-    </Container>
+  <Box
+    sx={{
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
+      gap: "1rem",
+      height: "100%",
+      justifyContent: "center",
+      width: "100%",
+    }}
+  >
+    <Box
+      sx={{
+        backgroundImage: `url(${icon})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "contain",
+        height: "16rem",
+        width: "16rem",
+      }}
+    />
+    <Typography sx={{opacity: 0.6}}>
+      Select a layer. If no layer, add one.
+    </Typography>
   </Box>
 );
 

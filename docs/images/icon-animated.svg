@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="ab03399f-a365-4967-bb32-c5eeefdf2a10" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1024 1024" style="enable-background:new 0 0 1024 1024;" xml:space="preserve">
+  <style type="text/css">
+	.st0{fill:#009688;}
+	.st1{fill:none;stroke:#333333;stroke-width:24;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#333333;stroke-width:24;stroke-linecap:round;stroke-miterlimit:10;}
+	.st3{fill:#333333;}
+	.st4{opacity:0.5;fill:url(#SVGID_1_);enable-background:new    ;}
+	.st5{fill:none;stroke:#333333;stroke-width:24;}
+	.st6{opacity:0.75;fill:url(#SVGID_00000018959047479994922100000003730785186708073611_);enable-background:new    ;}
+
+  #c84d4bf4-8867-4fdd-b0ee-819833b1cb43 {
+    animation: d3864579-496b-4f67-b516-e60af7c6830a 2s ease;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    opacity: 0;
+  }
+
+  @keyframes d3864579-496b-4f67-b516-e60af7c6830a {
+    0% {
+      opacity: 0;
+      transform: translate(0, 200px);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    75% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  #b076a78c-6e14-4b36-b55f-43f6dac6d425 {
+    animation: edd1ab27-f188-4aa4-8785-ca165508b9c5 2s ease;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    opacity: 0;
+  }
+
+  @keyframes edd1ab27-f188-4aa4-8785-ca165508b9c5 {
+    0% {
+      opacity: 0;
+      transform: translate(0, 200px);
+    }
+    25% {
+      opacity: 0;
+      transform: translate(0, 200px);
+    }
+    75% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+</style>
+  <g id="d5ee7d6c-d283-444f-9789-b8e73d3e3bab">
+    <g id="XMLID_00000042000242578379697490000001632229438760165799_">
+      <path class="st0" d="M894.1,733.2c9.8,4.9,9.8,13,0,17.9L529.9,933.2c-9.8,4.9-25.9,4.9-35.8,0L129.9,751.1
+			c-9.8-4.9-9.8-13,0-17.9l364.2-182.1c9.8-4.9,25.9-4.9,35.8,0L894.1,733.2z" />
+      <path class="st1" d="M894.1,733.2c9.8,4.9,9.8,13,0,17.9L529.9,933.2c-9.8,4.9-25.9,4.9-35.8,0L129.9,751.1
+			c-9.8-4.9-9.8-13,0-17.9l364.2-182.1c9.8-4.9,25.9-4.9,35.8,0L894.1,733.2z" />
+    </g>
+    <line class="st2" x1="817.1" y1="742.2" x2="521" y2="888" />
+    <circle class="st3" cx="240" cy="742" r="24" />
+    <circle class="st3" cx="303" cy="773" r="24" />
+    <circle class="st3" cx="365" cy="808" r="24" />
+  </g>
+  <g id="c84d4bf4-8867-4fdd-b0ee-819833b1cb43">
+    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="219.1226" y1="680.3428" x2="804.8774" y2="342.1572">
+      <stop offset="0" style="stop-color:#FFFFFF" />
+      <stop offset="0.5" style="stop-color:#FFFFFF;stop-opacity:0.5" />
+      <stop offset="1" style="stop-color:#FFFFFF" />
+    </linearGradient>
+    <path class="st4" d="M894.1,502.3c9.8,4.9,9.8,13,0,17.9L529.9,702.3c-9.8,4.9-25.9,4.9-35.8,0L129.9,520.2c-9.8-4.9-9.8-13,0-17.9
+		l364.2-182.1c9.8-4.9,25.9-4.9,35.8,0L894.1,502.3z" />
+    <path class="st5" d="M894.1,502.3c9.8,4.9,9.8,13,0,17.9L529.9,702.3c-9.8,4.9-25.9,4.9-35.8,0L129.9,520.2c-9.8-4.9-9.8-13,0-17.9
+		l364.2-182.1c9.8-4.9,25.9-4.9,35.8,0L894.1,502.3z" />
+  </g>
+  <g id="b076a78c-6e14-4b36-b55f-43f6dac6d425">
+
+    <linearGradient id="SVGID_00000155854758175124070210000003938620950152548496_" gradientUnits="userSpaceOnUse" x1="219.1225" y1="463.8428" x2="804.8774" y2="125.6572">
+      <stop offset="0" style="stop-color:#FFFFFF" />
+      <stop offset="0.5" style="stop-color:#FFFFFF;stop-opacity:0.5" />
+      <stop offset="1" style="stop-color:#FFFFFF" />
+    </linearGradient>
+    <path style="opacity:0.75;fill:url(#SVGID_00000155854758175124070210000003938620950152548496_);enable-background:new    ;" d="
+		M894.1,285.8c9.8,4.9,9.8,13,0,17.9L529.9,485.8c-9.8,4.9-25.9,4.9-35.8,0L129.9,303.7c-9.8-4.9-9.8-13,0-17.9l364.2-182.1
+		c9.8-4.9,25.9-4.9,35.8,0L894.1,285.8z" />
+    <path class="st5" d="M894.1,285.8c9.8,4.9,9.8,13,0,17.9L529.9,485.8c-9.8,4.9-25.9,4.9-35.8,0L129.9,303.7c-9.8-4.9-9.8-13,0-17.9
+		l364.2-182.1c9.8-4.9,25.9-4.9,35.8,0L894.1,285.8z" />
+  </g>
+</svg>

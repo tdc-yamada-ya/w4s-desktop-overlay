@@ -11,11 +11,11 @@ import {updateLayerBounds} from "./logic/updateLayerBounds";
 import {updateLayerLayoutingMode} from "./logic/updateLayerLayoutingMode";
 import {initDevtool} from "./main/debug/initDevtool";
 import {initReload} from "./main/debug/initReload";
-import {findAppProtocolArg} from "./main/findAppProtocolArg";
+import {initAppProtocol} from "./main/initAppProtocol";
 import {initDefaultProtocolClient} from "./main/initDefaultProtocolClient";
+import {initTitlebar} from "./main/initTitlebar";
 import {openHelp} from "./main/openHelp";
 import {createOverlay} from "./main/overlay/createOverlay";
-import {parseAppProtocolArg} from "./main/parseAppProtocolArg";
 import {MessageMap} from "./message/MessageMap";
 import {ReplicantMap} from "./replicant/ReplicantMap";
 import {defaultStore} from "./replicant/store/defaultStore";
@@ -70,26 +70,16 @@ const init = async () => {
     msgSender.send("version", app.getVersion()),
   );
 
-  const processAppProtocolArg = (argv: string[]) => {
-    const q = parseAppProtocolArg(findAppProtocolArg(argv));
-    if (q) {
-      mainWindow.show();
+  initAppProtocol({
+    sender: msgSender,
+    window: mainWindow,
+  });
 
-      if (q.type === "direct") {
-        msgSender.send("openLayer", {
-          settingsURL: q.settingsURL,
-          title: q.title,
-          url: q.url,
-        });
-      }
-    }
-  };
-
-  app.on("second-instance", (_, argv) => processAppProtocolArg(argv));
-
-  mainWindow.webContents.once("did-finish-load", () =>
-    processAppProtocolArg(process.argv),
-  );
+  initTitlebar({
+    sender: msgSender,
+    subscriber: msgSubscriber,
+    window: mainWindow,
+  });
 };
 
 const quit = () => app.quit();
