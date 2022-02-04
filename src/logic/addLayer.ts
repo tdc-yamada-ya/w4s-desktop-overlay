@@ -5,8 +5,8 @@ import {LayerConfig} from "../replicant/LayerConfig";
 import {OverlayConfig} from "../replicant/OverlayConfig";
 import {Screen} from "../replicant/ScreenConfig";
 
-const width = 640;
-const height = 480;
+const width = 480;
+const height = 360;
 
 export const addLayer = (
   o?: OverlayConfig,

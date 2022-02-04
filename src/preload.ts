@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   msgSubscriber.on("version", (_, v) => {
-    titlebar.updateTitle("W4S Overlay Desktop " + v);
+    titlebar.updateTitle("W4S Desktop Overlay " + v);
   });
 
   msgSender.send("version");

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import {ReactNode, useState} from "react";
 
-import icon from "../../assets/icon-animated.svg";
+import {AnimatedIcon} from "./AnimatedIcon";
 import {DeleteLayerButton} from "./DeleteLayerButton";
 import {DeleteLayerInputSection} from "./DeleteLayerInputSection";
 import {ExternalSettings} from "./ExternalSettings";
@@ -192,15 +192,7 @@ const Usage = () => (
       width: "100%",
     }}
   >
-    <Box
-      sx={{
-        backgroundImage: `url(${icon})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "contain",
-        height: "16rem",
-        width: "16rem",
-      }}
-    />
+    <AnimatedIcon />
     <Typography sx={{opacity: 0.6}}>
       Select a layer. If no layer, add one.
     </Typography>
