@@ -48,24 +48,27 @@ export const FirstSteps = ({id}: {id?: string}) => {
           </StepContent>
         </Step>
         <Step active={true} expanded={true}>
-          <StepLabel>Finish layout.</StepLabel>
+          <StepLabel>Finish layouting.</StepLabel>
           <StepContent>
-            <Stack spacing={2}>
-              <Stack spacing={1}>
-                <Typography>
-                  Close the window or click follwing button to finalize the
-                  position of the layer.
-                </Typography>
-                <Stack direction='row'>
-                  {id ? <FinishLayerLayoutingButton id={id} /> : null}
-                </Stack>
+            <Stack spacing={1}>
+              <Typography>
+                Close the layer window or click follwing button to finalize the
+                position of the layer.
+              </Typography>
+              <Stack direction='row'>
+                {id ? <FinishLayerLayoutingButton id={id} /> : null}
               </Stack>
-              <Stack spacing={1}>
-                <Typography>
-                  If you want to move it again, enable the layout mode.
-                </Typography>
-                {id ? <LayerLayoutingModeField id={id} /> : null}
-              </Stack>
+            </Stack>
+          </StepContent>
+        </Step>
+        <Step active={true} expanded={true}>
+          <StepLabel>Move again.</StepLabel>
+          <StepContent>
+            <Stack spacing={1}>
+              <Typography>
+                If you want to move it again, enable the layout mode.
+              </Typography>
+              {id ? <LayerLayoutingModeField id={id} /> : null}
             </Stack>
           </StepContent>
         </Step>

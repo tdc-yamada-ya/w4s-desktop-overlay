@@ -34,6 +34,14 @@ const init = async () => {
   });
   const overlayRep = repFactory.createReplicant("overlay");
   const screenRep = repFactory.createReplicant("screen");
+
+  overlayRep.set({
+    ...{
+      layers: {},
+    },
+    ...overlayRep.get(),
+  });
+
   const overlay = createOverlay({
     onBounds(id, bounds) {
       overlayRep.set(updateLayerBounds(overlayRep.get(), id, bounds));
