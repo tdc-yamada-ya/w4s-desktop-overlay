@@ -1,3 +1,4 @@
+import {Color, Titlebar} from "custom-electron-titlebar";
 import {contextBridge, ipcRenderer} from "electron";
 
 import {API} from "./api";
@@ -22,21 +23,50 @@ const msgSubscriber = createMessageSubscriber<MessageMap, unknown>({
   subscriber: ipcRenderer,
 });
 
+window.addEventListener("DOMContentLoaded", () => {
+  let isMaximized = false;
+
+  msgSubscriber.on("titlebar:isMaximized", (_, v) => {
+    isMaximized = v;
+  });
+
+  new Titlebar({
+    backgroundColor: Color.fromHex("#009688"),
+    onMinimize() {
+      msgSender.send("titlebar:minimize");
+    },
+    onMaximize() {
+      msgSender.send("titlebar:maximize");
+    },
+    onClose() {
+      msgSender.send("titlebar:close");
+    },
+    isMaximized() {
+      return isMaximized;
+    },
+    onMenuItemClick() {
+      return;
+    },
+  });
+});
+
 const api: API = {
-  replicant: (name) => repFactory.createReplicant(name),
-
-  reload: (id) => msgSender.send("reload", id),
-
-  help: () => msgSender.send("help"),
-
-  subscribeVersion: (listener) => {
+  replicant(name) {
+    return repFactory.createReplicant(name);
+  },
+  reload(id) {
+    msgSender.send("reload", id);
+  },
+  help() {
+    msgSender.send("help");
+  },
+  subscribeVersion(listener) {
     const l = (_: unknown, v: string) => listener(v);
     msgSubscriber.on("version", l);
     msgSender.send("version");
     return () => msgSubscriber.off("version", l);
   },
-
-  subscribeOpenLayer: (listener) => {
+  subscribeOpenLayer(listener) {
     const l = (_: unknown, v: LayerConfig) => listener(v);
     msgSubscriber.on("openLayer", l);
     return () => msgSubscriber.off("openLayer", l);

@@ -7,7 +7,7 @@ import {SidePane} from "./SidePane";
 export const App = () => (
   <Box
     sx={{
-      height: "100vh",
+      height: "100%",
       width: "100%",
     }}
   >

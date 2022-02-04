@@ -16,7 +16,7 @@ export const Root = () => {
           <Box
             sx={{
               backgroundColor: theme.palette.background.default,
-              minHeight: "100vh",
+              height: "100%",
             }}
           >
             <Helmet>

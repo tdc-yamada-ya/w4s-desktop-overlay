@@ -2655,6 +2655,11 @@ csstype@^3.0.10, csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
   integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
 
+custom-electron-titlebar@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/custom-electron-titlebar/-/custom-electron-titlebar-4.0.1.tgz#cc337e21a4bf5522c7c9729a41657049a56de003"
+  integrity sha512-fdnAylObN/qvmd+UFwlWnJqttbOBkuWF7tSPe19R12CtadNTw9PWzWC8NM5KuoKanCSq6KclruhgQeH++16cuQ==
+
 debounce-fn@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/debounce-fn/-/debounce-fn-4.0.0.tgz#ed76d206d8a50e60de0dd66d494d82835ffe61c7"
