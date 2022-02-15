@@ -1,7 +1,7 @@
 {
   "name": "w4s-desktop-overlay",
   "description": "This is a desktop application for streamers that overlays web pages on your desktop.",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "license": "MIT",
   "main": "dist/main.js",
   "scripts": {
@@ -22,15 +22,18 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.8",
+    "@types/fabric": "^4.5.7",
     "@types/lodash": "^4.14.178",
     "@types/uuid": "^8.3.4",
     "commander": "^8.3.0",
     "custom-electron-titlebar": "^4.0.1",
     "electron-search-devtools": "^1.5.2",
     "electron-store": "^8.0.1",
+    "fabric": "^4.6.0",
     "lodash": "^4.17.21",
     "qs": "^6.10.3",
     "react": "^17.0.2",
+    "react-cool-dimensions": "^2.0.7",
     "react-dom": "^17.0.2",
     "uuid": "^8.3.2"
   },

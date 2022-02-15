@@ -1,15 +1,15 @@
 import {Box, ButtonBase, Typography, useTheme} from "@mui/material";
 
-import {setSelectedLayerID} from "../logic/setSelectedLayerID";
 import {LayerOpacitySlider} from "./LayerOpacitySlider";
 import {ToggleLayerVisibleButton} from "./ToggleLayerVisibleButton";
 import {useLayer} from "./hooks/useLayer";
+import {useSelectLayer} from "./hooks/useSelectLayer";
 import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
-import {updateOverlay} from "./replicant/updateOverlay";
 
 export const LayerListItem = ({id}: {id: string}) => {
   const selectedID = useSelectedLayerID();
   const layer = useLayer(id);
+  const selectLayer = useSelectLayer();
   const theme = useTheme();
   const selected = id === selectedID;
   const title = layer?.title || "No Title";
@@ -40,7 +40,7 @@ export const LayerListItem = ({id}: {id: string}) => {
           textAlign: "left",
           width: "100%",
         }}
-        onClick={() => updateOverlay((o) => setSelectedLayerID(o, id))}
+        onClick={() => selectLayer(id)}
       >
         <Typography
           sx={{
