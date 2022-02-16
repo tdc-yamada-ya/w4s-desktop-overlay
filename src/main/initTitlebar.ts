@@ -1,8 +1,8 @@
 import {BrowserWindow} from "electron";
 
-import {MessageMap} from "../lib/electron-message/MessageMap";
-import {MessageSender} from "../lib/electron-message/MessageSender";
-import {MessageSubscriber} from "../lib/electron-message/MessageSubscriber";
+import {MessageMap} from "../common/lib/electron-message/MessageMap";
+import {MessageSender} from "../common/lib/electron-message/MessageSender";
+import {MessageSubscriber} from "../common/lib/electron-message/MessageSubscriber";
 
 export const initTitlebar = ({
   sender,

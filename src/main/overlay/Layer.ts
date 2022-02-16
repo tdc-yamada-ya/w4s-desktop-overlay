@@ -1,4 +1,4 @@
-import {LayerConfig} from "../../replicant/LayerConfig";
+import {LayerConfig} from "../../common/replicant/LayerConfig";
 
 export type Layer = {
   apply(c: Partial<LayerConfig>): void;

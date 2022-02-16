@@ -1,5 +1,5 @@
-import {Bounds} from "../../replicant/Bounds";
-import {LayerConfig} from "../../replicant/LayerConfig";
+import {Bounds} from "../../common/replicant/Bounds";
+import {LayerConfig} from "../../common/replicant/LayerConfig";
 import {Layer} from "./Layer";
 import {Overlay} from "./Overlay";
 import {createLayer} from "./createLayer";

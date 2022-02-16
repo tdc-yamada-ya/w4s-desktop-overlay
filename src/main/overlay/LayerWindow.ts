@@ -1,4 +1,4 @@
-import {Bounds} from "../../replicant/Bounds";
+import {Bounds} from "../../common/replicant/Bounds";
 
 export type LayerWindow = {
   destroy(): void;

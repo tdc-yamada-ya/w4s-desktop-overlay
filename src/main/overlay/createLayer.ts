@@ -1,7 +1,7 @@
 import {clone, isEqual, omitBy} from "lodash";
 
-import {Bounds} from "../../replicant/Bounds";
-import {LayerConfig} from "../../replicant/LayerConfig";
+import {Bounds} from "../../common/replicant/Bounds";
+import {LayerConfig} from "../../common/replicant/LayerConfig";
 import {Layer} from "./Layer";
 import {LayerWindow} from "./LayerWindow";
 import {createLayerWindow} from "./createLayerWindow";

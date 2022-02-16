@@ -1,7 +1,7 @@
 import {BrowserWindow, app} from "electron";
 
-import {MessageMap} from "../lib/electron-message/MessageMap";
-import {MessageSender} from "../lib/electron-message/MessageSender";
+import {MessageMap} from "../common/lib/electron-message/MessageMap";
+import {MessageSender} from "../common/lib/electron-message/MessageSender";
 import {findAppProtocolArg} from "./findAppProtocolArg";
 import {parseAppProtocolArg} from "./parseAppProtocolArg";
 
