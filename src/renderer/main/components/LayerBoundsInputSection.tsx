@@ -11,7 +11,7 @@ const useValue = (id?: string) => {
   return layer?.bounds;
 };
 
-const encode = (n?: number) => (n ?? 0).toString();
+const encode = (n?: number) => Math.floor(n ?? 0).toString();
 
 const decode = (v: string) => parseInt(v) || 0;
 
