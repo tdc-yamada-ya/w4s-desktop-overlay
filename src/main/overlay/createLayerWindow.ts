@@ -1,8 +1,8 @@
 import {BrowserWindow, session} from "electron";
 import {v4 as uuid} from "uuid";
 
-import {dev} from "../../dev";
-import {Bounds} from "../../replicant/Bounds";
+import {Bounds} from "../../common/replicant/Bounds";
+import {dev} from "../dev";
 import {LayerWindow} from "./LayerWindow";
 
 const createSetCSS = (w: BrowserWindow) => {
@@ -127,7 +127,7 @@ export const createLayerWindow = ({
 
   if (dev) w.webContents.openDevTools({mode: "detach"});
 
-  w.loadFile("dist/layer.html");
+  w.loadFile("dist/renderer/layer/index.html");
 
   w.on("moved", () => onBounds?.(w.getBounds()));
   w.on("resized", () => onBounds?.(w.getBounds()));
@@ -162,7 +162,7 @@ export const createLayerWindow = ({
       if (v) {
         w.loadURL(v);
       } else {
-        w.loadFile("dist/layer.html");
+        w.loadFile("dist/renderer/layer/index.html");
       }
     },
     setVisible: createSetVisible(w),

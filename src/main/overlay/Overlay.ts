@@ -1,4 +1,4 @@
-import {OverlayConfig} from "../../replicant/OverlayConfig";
+import {OverlayConfig} from "../../common/replicant/OverlayConfig";
 
 export type Overlay = {
   apply(config?: OverlayConfig): void;

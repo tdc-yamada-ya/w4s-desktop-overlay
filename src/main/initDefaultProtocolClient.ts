@@ -1,8 +1,8 @@
 import {app} from "electron";
 import path from "path";
 
-import {dev} from "../dev";
 import {appProtocol} from "./appProtocol";
+import {dev} from "./dev";
 
 export const initDefaultProtocolClient = () => {
   app.removeAsDefaultProtocolClient(appProtocol);

@@ -5,7 +5,7 @@ import {Configuration} from "webpack";
 
 const isDev = process.env["NODE_ENV"] === "development";
 
-const common: Configuration = {
+const common = ({dir}: {dir: string[]}): Configuration => ({
   mode: isDev ? "development" : "production",
   node: {
     __dirname: false,
@@ -16,7 +16,7 @@ const common: Configuration = {
   },
   externals: ["fsevents"],
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "dist", ...dir),
     publicPath: "./",
     filename: "[name].js",
     assetModuleFilename: "assets/[name][ext]",
@@ -57,49 +57,48 @@ const common: Configuration = {
   stats: "errors-only",
   performance: {hints: false},
   devtool: isDev ? "inline-source-map" : undefined,
-};
+});
 
 const main: Configuration = {
-  ...common,
+  ...common({dir: ["main"]}),
   target: "electron-main",
   entry: {
-    main: "./src/main.ts",
+    index: "./src/main/index.ts",
   },
 };
 
-const preload: Configuration = {
-  ...common,
+const preload = ({name}: {name: string}): Configuration => ({
+  ...common({dir: ["renderer", name]}),
   target: "electron-preload",
   entry: {
-    preload: "./src/preload.ts",
+    preload: `./src/renderer/${name}/preload.ts`,
   },
-};
+});
 
-const renderer: Configuration = {
-  ...common,
+const renderer = ({name}: {name: string}): Configuration => ({
+  ...common({dir: ["renderer", name]}),
   target: "web",
   entry: {
-    renderer: `./src/renderer.tsx`,
-    layer: `./src/layer.tsx`,
+    index: `./src/renderer/${name}/index.tsx`,
   },
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      chunks: ["renderer"],
+      chunks: ["index"],
       minify: !isDev,
       inject: "body",
       filename: `index.html`,
-      template: `./src/index.html`,
-    }),
-    new HtmlWebpackPlugin({
-      chunks: ["layer"],
-      minify: !isDev,
-      inject: "body",
-      filename: `layer.html`,
-      template: `./src/index.html`,
+      template: `./src/renderer/common/index.html`,
     }),
   ],
-};
+});
 
-const config = isDev ? [renderer] : [main, preload, renderer];
+const rendererMainPreload = preload({name: "main"});
+const rendererMain = renderer({name: "main"});
+const rendererLayer = renderer({name: "layer"});
+
+const config = isDev
+  ? [rendererMain, rendererLayer]
+  : [main, rendererMainPreload, rendererMain, rendererLayer];
+
 export default config;
