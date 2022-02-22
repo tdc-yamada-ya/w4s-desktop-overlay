@@ -1,4 +1,12 @@
-import {Box, Skeleton, Stack, Typography, useTheme} from "@mui/material";
+import {
+  Box,
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import {Fragment} from "react";
 
 import {AddLayerButton} from "./AddLayerButton";
 import {LayerListItem} from "./LayerListItem";
@@ -34,6 +42,7 @@ const Guide = () => {
 
 export const LayerList = () => {
   const layers = useLayers({sort: true});
+
   return layers == null ? (
     <Loading />
   ) : layers.length === 0 ? (
@@ -41,9 +50,10 @@ export const LayerList = () => {
   ) : (
     <Stack>
       {layers.map(([id]) => (
-        <Box key={id}>
+        <Fragment key={id}>
           <LayerListItem id={id} />
-        </Box>
+          <Divider variant='middle' />
+        </Fragment>
       ))}
     </Stack>
   );

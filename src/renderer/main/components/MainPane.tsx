@@ -144,12 +144,8 @@ const Toolbar = () => {
 };
 
 const LayerTitle = () => {
-  const title = useSelectedLayerTitle() || "No Title";
-  return (
-    <Typography sx={{fontSize: "1.2rem", fontWeight: "bold"}}>
-      {title}
-    </Typography>
-  );
+  const title = useSelectedLayerTitle();
+  return <Typography sx={{fontWeight: "bold"}}>{title}</Typography>;
 };
 
 const Head = () => {
