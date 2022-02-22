@@ -1,7 +1,7 @@
 import React from "react";
 import {render} from "react-dom";
 
-import "../common/styles.css";
+import "../common/styles";
 import {Root} from "./components/Root";
 
 render(
