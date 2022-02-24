@@ -1,6 +1,8 @@
-import {useSelectedLayer} from "./useSelectedLayer";
+import {useLayerTitle} from "./useLayerTitle";
+import {useSelectedLayerID} from "./useSelectedLayerID";
 
 export const useSelectedLayerTitle = () => {
-  const l = useSelectedLayer();
-  return l?.title;
+  const id = useSelectedLayerID();
+  const title = useLayerTitle(id);
+  return title;
 };

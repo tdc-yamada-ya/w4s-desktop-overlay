@@ -127,7 +127,7 @@ export const createLayerWindow = ({
 
   if (dev) w.webContents.openDevTools({mode: "detach"});
 
-  w.loadFile("dist/renderer/layer/index.html");
+  w.loadFile("dist/renderer/widgets/default/index.html");
 
   w.on("moved", () => onBounds?.(w.getBounds()));
   w.on("resized", () => onBounds?.(w.getBounds()));
@@ -162,7 +162,7 @@ export const createLayerWindow = ({
       if (v) {
         w.loadURL(v);
       } else {
-        w.loadFile("dist/renderer/layer/index.html");
+        w.loadFile("dist/renderer/widgets/default/index.html");
       }
     },
     setVisible: createSetVisible(w),

@@ -67,19 +67,19 @@ const main: Configuration = {
   },
 };
 
-const preload = ({name}: {name: string}): Configuration => ({
-  ...common({dir: ["renderer", name]}),
+const preload = ({dir}: {dir: string[]}): Configuration => ({
+  ...common({dir: ["renderer", ...dir]}),
   target: "electron-preload",
   entry: {
-    preload: `./src/renderer/${name}/preload.ts`,
+    preload: `./src/renderer/${dir.join("/")}/preload.ts`,
   },
 });
 
-const renderer = ({name}: {name: string}): Configuration => ({
-  ...common({dir: ["renderer", name]}),
+const renderer = ({dir}: {dir: string[]}): Configuration => ({
+  ...common({dir: ["renderer", ...dir]}),
   target: "web",
   entry: {
-    index: `./src/renderer/${name}/index.tsx`,
+    index: `./src/renderer/${dir.join("/")}/index.tsx`,
   },
   plugins: [
     new MiniCssExtractPlugin(),
@@ -93,12 +93,13 @@ const renderer = ({name}: {name: string}): Configuration => ({
   ],
 });
 
-const rendererMainPreload = preload({name: "main"});
-const rendererMain = renderer({name: "main"});
-const rendererLayer = renderer({name: "layer"});
+const rendererMainPreload = preload({dir: ["main"]});
+
+const rendererMain = renderer({dir: ["main"]});
+const rendererWidgets = [renderer({dir: ["widgets", "default"]})];
 
 const config = isDev
-  ? [rendererMain, rendererLayer]
-  : [main, rendererMainPreload, rendererMain, rendererLayer];
+  ? [rendererMain, ...rendererWidgets]
+  : [main, rendererMainPreload, rendererMain, ...rendererWidgets];
 
 export default config;
