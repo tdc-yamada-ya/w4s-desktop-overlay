@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 
-import {LayerConfig} from "../../../../common/replicant/LayerConfig";
+import {LayerProperties} from "../../../../common/replicant/LayerProperties";
 
 export const useOpenLayerRequest = () => {
-  const [query, setQuery] = useState<LayerConfig | null>(null);
+  const [query, setQuery] = useState<LayerProperties | null>(null);
 
   useEffect(() => {
     const u = window.api.subscribeOpenLayer((v) => setQuery(v));

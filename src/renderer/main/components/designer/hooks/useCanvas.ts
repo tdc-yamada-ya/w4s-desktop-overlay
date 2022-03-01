@@ -1,10 +1,21 @@
 import {fabric} from "fabric";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import {attachPanning} from "../pan/attachPanning";
 import {createPanning} from "../pan/createPanning";
 import {attachZooming} from "../zoom/attachZooming";
 import {createZooming} from "../zoom/createZooming";
+
+const useDelayState = <T>(state: T, timeout: number): T => {
+  const [current, setCurrent] = useState(state);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setCurrent(state), timeout);
+    return () => window.clearTimeout(id);
+  }, [state, timeout]);
+
+  return current;
+};
 
 export const useCanvas = ({
   height = 400,
@@ -14,6 +25,8 @@ export const useCanvas = ({
   width?: number;
 }) => {
   const [canvas, setCanvas] = useState<fabric.Canvas>();
+  const currentHeight = useDelayState(height, 20);
+  const currentWidth = useDelayState(width, 20);
 
   const ref = useCallback(
     (targetElement: HTMLDivElement | null) => {
@@ -25,14 +38,14 @@ export const useCanvas = ({
       targetElement.appendChild(canvasElement);
 
       const canvas = new fabric.Canvas(canvasElement, {
-        backgroundColor: "#eeeeee",
+        backgroundColor: "#eee",
         fireMiddleClick: true,
         fireRightClick: true,
-        height,
+        height: currentHeight,
         hoverCursor: "pointer",
         preserveObjectStacking: true,
         selection: false,
-        width,
+        width: currentWidth,
       });
 
       attachPanning({canvas, panning: createPanning()});
@@ -40,7 +53,7 @@ export const useCanvas = ({
 
       setCanvas(canvas);
     },
-    [height, width],
+    [currentHeight, currentWidth],
   );
 
   return [ref, canvas] as const;

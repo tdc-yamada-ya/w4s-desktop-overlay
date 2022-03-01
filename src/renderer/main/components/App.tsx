@@ -1,30 +1,21 @@
-import {Box, Divider} from "@mui/material";
+import {Fragment} from "react";
 
+import {KeepRatioSplitPane} from "./KeepRatioSplitPane";
 import {MainPane} from "./MainPane";
 import {OpenLayerDialog} from "./OpenLayerDialog";
 import {SidePane} from "./SidePane";
 
 export const App = () => (
-  <Box
-    sx={{
-      height: "100%",
-      width: "100%",
-    }}
-  >
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "300px 1px 1fr",
-        gridTemplateRows: "100%",
-        height: "100%",
-        overflow: "hidden",
-        width: "100%",
-      }}
+  <Fragment>
+    <KeepRatioSplitPane
+      defaultRatio={0.3}
+      maxSize={-100}
+      minSize={50}
+      split='vertical'
     >
       <SidePane />
-      <Divider orientation='vertical' flexItem />
       <MainPane />
-    </Box>
+    </KeepRatioSplitPane>
     <OpenLayerDialog />
-  </Box>
+  </Fragment>
 );

@@ -2,7 +2,7 @@ import {Box, Stack, Typography} from "@mui/material";
 import {ReactNode} from "react";
 
 const Title = ({children}: {children: ReactNode}) => (
-  <Typography sx={{fontWeight: 800}}>{children}</Typography>
+  <Typography sx={{fontSize: "0.8rem", fontWeight: 800}}>{children}</Typography>
 );
 
 const Description = ({children}: {children: ReactNode}) => (
@@ -19,7 +19,7 @@ export const InputSection = ({
   label?: ReactNode;
 }) => (
   <Stack spacing={1}>
-    <Stack spacing={0}>
+    <Stack spacing={0.3}>
       <Title>{label}</Title>
       <Description>{description}</Description>
     </Stack>

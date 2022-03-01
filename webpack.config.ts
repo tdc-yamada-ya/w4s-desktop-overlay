@@ -59,27 +59,19 @@ const common = ({dir}: {dir: string[]}): Configuration => ({
   devtool: isDev ? "inline-source-map" : undefined,
 });
 
-const main: Configuration = {
+const main = (): Configuration => ({
   ...common({dir: ["main"]}),
   target: "electron-main",
   entry: {
-    index: "./src/main/index.ts",
-  },
-};
-
-const preload = ({dir}: {dir: string[]}): Configuration => ({
-  ...common({dir: ["renderer", ...dir]}),
-  target: "electron-preload",
-  entry: {
-    preload: `./src/renderer/${dir.join("/")}/preload.ts`,
+    main: "./src/main/main.ts",
   },
 });
 
-const renderer = ({dir}: {dir: string[]}): Configuration => ({
-  ...common({dir: ["renderer", ...dir]}),
+const renderer = (name: string): Configuration => ({
+  ...common({dir: ["renderer", name]}),
   target: "web",
   entry: {
-    index: `./src/renderer/${dir.join("/")}/index.tsx`,
+    index: `./src/renderer/${name}/index.tsx`,
   },
   plugins: [
     new MiniCssExtractPlugin(),
@@ -93,13 +85,49 @@ const renderer = ({dir}: {dir: string[]}): Configuration => ({
   ],
 });
 
-const rendererMainPreload = preload({dir: ["main"]});
+const preload = (name: string): Configuration => ({
+  ...common({dir: ["renderer", name]}),
+  target: "electron-preload",
+  entry: {
+    preload: `./src/renderer/${name}/preload.ts`,
+  },
+});
 
-const rendererMain = renderer({dir: ["main"]});
-const rendererWidgets = [renderer({dir: ["widgets", "default"]})];
+const widget = (name: string): Configuration => ({
+  ...common({dir: ["renderer", "widgets", name]}),
+  target: "web",
+  entry: {
+    view: `./src/renderer/widgets/${name}/view/index.tsx`,
+    settings: `./src/renderer/widgets/${name}/settings/index.tsx`,
+  },
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      chunks: ["view"],
+      minify: true,
+      inject: "body",
+      filename: `view.html`,
+      template: `./src/renderer/common/index.html`,
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ["settings"],
+      minify: true,
+      inject: "body",
+      filename: `settings.html`,
+      template: `./src/renderer/common/index.html`,
+    }),
+  ],
+});
 
-const config = isDev
-  ? [rendererMain, ...rendererWidgets]
-  : [main, rendererMainPreload, rendererMain, ...rendererWidgets];
+const mainSet = (): Configuration[] => [main()];
+
+const rendererSet = (): Configuration[] => [
+  preload("main"),
+  renderer("main"),
+  widget("clock"),
+  widget("default"),
+];
+
+const config = isDev ? [...rendererSet()] : [...mainSet(), ...rendererSet()];
 
 export default config;

@@ -1,6 +1,6 @@
-import {LayerConfig} from "../replicant/LayerConfig";
+import {LayerProperties} from "../replicant/LayerProperties";
 
 export const sortLayers = (
-  layers?: [string, LayerConfig][],
-): [string, LayerConfig][] | undefined =>
+  layers?: [string, LayerProperties][],
+): [string, LayerProperties][] | undefined =>
   layers?.sort(([, {index: a}], [, {index: b}]) => (a ?? 0) - (b ?? 0));

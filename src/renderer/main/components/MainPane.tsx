@@ -1,19 +1,9 @@
-import {
-  Box,
-  Container,
-  Divider,
-  Stack,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import {ReactNode, useState} from "react";
+import {Box, Container, Divider, Stack, Typography} from "@mui/material";
 
 import {AnimatedIcon} from "./AnimatedIcon";
 import {DeleteLayerButton} from "./DeleteLayerButton";
 import {DeleteLayerInputSection} from "./DeleteLayerInputSection";
-import {ExternalSettings} from "./ExternalSettings";
-import {FirstSteps} from "./FirstSteps";
+import {KeepRatioSplitPane} from "./KeepRatioSplitPane";
 import {LayerBoundsInputSection} from "./LayerBoundsInputSection";
 import {LayerCSSInputSection} from "./LayerCSSInputSection";
 import {LayerLayoutingModeInputSection} from "./LayerLayoutingModeInputSection";
@@ -23,47 +13,38 @@ import {LayerTitleInputSection} from "./LayerTitleInputSection";
 import {LayerURLInputSection} from "./LayerURLInputSection";
 import {LayerVisibleInputSection} from "./LayerVisibleInputSection";
 import {ReloadLayerButton} from "./ReloadLayerButton";
+import {ShowLayerSettingsWindowButton} from "./ShowLayerSettingsWindowButton";
 import {ToggleLayerAudioMutedButton} from "./ToggleLayerAudioMutedButton";
 import {ToggleLayerLayoutingModeButton} from "./ToggleLayerLayoutingModeButton";
+import {Designer} from "./designer/Designer";
 import {useIsLayerSelected} from "./hooks/useIsLayerSelected";
 import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
 import {useSelectedLayerTitle} from "./hooks/useSelectedLayerTitle";
-
-const GuidePage = () => {
-  const id = useSelectedLayerID();
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
-        height: "100%",
-        overflow: "hidden",
-        width: "100%",
-      }}
-    >
-      <Box sx={{flexGrow: 1, overflow: "auto"}}>
-        <FirstSteps id={id} />
-      </Box>
-    </Box>
-  );
-};
 
 const GeneralPage = () => {
   const id = useSelectedLayerID();
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
         height: "100%",
+        overflow: "auto",
         width: "100%",
       }}
     >
-      <Box sx={{flexGrow: 1, overflow: "auto"}}>
-        <Container sx={{margin: "0 auto", padding: "1rem"}} maxWidth='md'>
-          <Stack spacing={4}>
+      <Container sx={{margin: "0 auto", padding: "1rem"}} maxWidth='xs'>
+        <Stack spacing={2}>
+          <Box>
+            <Typography
+              sx={{
+                fontSize: "0.7rem",
+                opacity: 0.5,
+                textTransform: "uppercase",
+              }}
+            >
+              Common Settings
+            </Typography>
+          </Box>
+          <Stack spacing={6}>
             <LayerTitleInputSection id={id} />
             <LayerURLInputSection id={id} />
             <LayerSettingsURLInputSection id={id} />
@@ -74,59 +55,8 @@ const GeneralPage = () => {
             <LayerCSSInputSection id={id} />
             <DeleteLayerInputSection id={id} />
           </Stack>
-        </Container>
-      </Box>
-    </Box>
-  );
-};
-
-const LayerSettingsTabPanel = ({
-  children,
-  tab,
-  value,
-}: {
-  children?: ReactNode;
-  tab?: string;
-  value?: string;
-}) => {
-  const selected = value === tab;
-
-  return (
-    <Box sx={{height: "100%", width: "100%"}} hidden={!selected}>
-      {selected && children}
-    </Box>
-  );
-};
-
-const LayerSettingsTabs = () => {
-  const [tab, setTab] = useState("guide");
-
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-      }}
-    >
-      <Tabs sx={{margin: "0 1rem"}} value={tab} onChange={(_, v) => setTab(v)}>
-        <Tab label='Guide' value='guide' />
-        <Tab label='General' value='general' />
-        <Tab label='External' value='external' />
-      </Tabs>
-      <Divider />
-      <Box sx={{flexGrow: 1, overflow: "hidden"}}>
-        <LayerSettingsTabPanel tab='guide' value={tab}>
-          <GuidePage />
-        </LayerSettingsTabPanel>
-        <LayerSettingsTabPanel tab='general' value={tab}>
-          <GeneralPage />
-        </LayerSettingsTabPanel>
-        <LayerSettingsTabPanel tab='external' value={tab}>
-          <ExternalSettings />
-        </LayerSettingsTabPanel>
-      </Box>
+        </Stack>
+      </Container>
     </Box>
   );
 };
@@ -135,6 +65,7 @@ const Toolbar = () => {
   const id = useSelectedLayerID();
   return (
     <Stack direction='row' spacing={0}>
+      <ShowLayerSettingsWindowButton id={id} />
       <ReloadLayerButton id={id} />
       <ToggleLayerAudioMutedButton id={id} />
       <ToggleLayerLayoutingModeButton id={id} />
@@ -150,8 +81,15 @@ const LayerTitle = () => {
 
 const Head = () => {
   return (
-    <Box sx={{display: "flex", margin: "0.5rem 0.5rem 0 1rem"}}>
-      <Box sx={{flexGrow: 1}}>
+    <Box
+      sx={{
+        boxShadow: "0 0.1rem 0.2rem rgba(0, 0, 0, 0.1)",
+        display: "flex",
+        padding: "0.1rem 0.3rem 0 1rem",
+        width: "100%",
+      }}
+    >
+      <Box sx={{alignItems: "center", display: "flex", flexGrow: 1}}>
         <LayerTitle />
       </Box>
       <Toolbar />
@@ -170,8 +108,9 @@ const LayerSettings = () => (
     }}
   >
     <Head />
+    <Divider />
     <Box sx={{flexGrow: 1, overflow: "hidden"}}>
-      <LayerSettingsTabs />
+      <GeneralPage />
     </Box>
   </Box>
 );
@@ -188,7 +127,7 @@ const Usage = () => (
       width: "100%",
     }}
   >
-    <AnimatedIcon />
+    <AnimatedIcon height='8rem' width='8rem' />
     <Typography sx={{opacity: 0.6}}>
       Select a layer. If no layer, add one.
     </Typography>
@@ -197,9 +136,16 @@ const Usage = () => (
 
 export const MainPane = () => {
   const isLayerSelected = useIsLayerSelected();
+
   return (
-    <Box sx={{height: "100%", overflow: "hidden", width: "100%"}}>
+    <KeepRatioSplitPane
+      defaultRatio={0.6}
+      maxSize={-100}
+      minSize={100}
+      split='horizontal'
+    >
+      <Designer />
       {isLayerSelected ? <LayerSettings /> : <Usage />}
-    </Box>
+    </KeepRatioSplitPane>
   );
 };

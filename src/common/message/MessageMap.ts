@@ -1,10 +1,11 @@
-import {LayerConfig} from "../replicant/LayerConfig";
+import {LayerProperties} from "../replicant/LayerProperties";
 
 export type MessageMap = {
-  help: {data: unknown};
-  openLayer: {data: LayerConfig};
+  openLayer: {data: LayerProperties};
+  showLayerSettingsWindow: {data: string};
   reload: {data: string};
   version: {data: string};
+
   "titlebar:minimize": {data: unknown};
   "titlebar:maximize": {data: unknown};
   "titlebar:close": {data: unknown};

@@ -52,7 +52,7 @@ export const LayerList = () => {
       {layers.map(([id]) => (
         <Fragment key={id}>
           <LayerListItem id={id} />
-          <Divider variant='middle' />
+          <Divider />
         </Fragment>
       ))}
     </Stack>

@@ -1,12 +1,12 @@
 import {sortLayers} from "../../../../common/logic/sortLayers";
-import {LayerConfig} from "../../../../common/replicant/LayerConfig";
+import {LayerProperties} from "../../../../common/replicant/LayerProperties";
 import {useOverlay} from "./useOverlay";
 
 export const useLayers = ({
   sort,
 }: {
   sort?: boolean;
-}): [string, LayerConfig][] | undefined => {
+}): [string, LayerProperties][] | undefined => {
   const o = useOverlay();
   let layers = o?.layers && Object.entries(o.layers);
   if (sort) layers = sortLayers(layers);

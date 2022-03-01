@@ -3,7 +3,7 @@ import {isEqual, union} from "lodash";
 import {useMemo, useRef} from "react";
 
 import {Bounds} from "../../../../../common/replicant/Bounds";
-import {Layers} from "../../../../../common/replicant/Layers";
+import {LayerMap} from "../../../../../common/replicant/LayerMap";
 import {createLayerObject} from "../createLayerObject";
 
 type ObjectMap = {[id: string]: fabric.Object};
@@ -13,7 +13,7 @@ export const useLayerObjects = ({
   onBounds,
   onSelected,
 }: {
-  layers?: Layers;
+  layers?: LayerMap;
   onBounds?: (id: string, bounds: Bounds) => void;
   onSelected?: (id: string) => void;
 }): fabric.Object[] => {

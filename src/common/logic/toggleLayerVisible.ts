@@ -1,10 +1,10 @@
-import {OverlayConfig} from "../replicant/OverlayConfig";
+import {OverlaySettings} from "../replicant/OverlaySettings";
 import {updateLayerVisible} from "./updateLayerVisible";
 
 export const toggleLayerVisible = (
-  o?: OverlayConfig,
+  o?: OverlaySettings,
   id?: string,
-): OverlayConfig | undefined => {
+): OverlaySettings | undefined => {
   if (id == null) return o;
   return updateLayerVisible(o, id, !o?.layers?.[id]?.visible);
 };

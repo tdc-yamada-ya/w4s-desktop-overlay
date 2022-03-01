@@ -3,8 +3,8 @@ import {useEffect} from "react";
 import useDimensions from "react-cool-dimensions";
 
 import {Bounds} from "../../../../common/replicant/Bounds";
-import {Displays} from "../../../../common/replicant/Displays";
-import {Layers} from "../../../../common/replicant/Layers";
+import {Display} from "../../../../common/replicant/Display";
+import {LayerMap} from "../../../../common/replicant/LayerMap";
 import {useOverlay} from "../hooks/useOverlay";
 import {useScreen} from "../hooks/useScreen";
 import {useSelectLayer} from "../hooks/useSelectLayer";
@@ -22,8 +22,8 @@ export const DesignerInternal = ({
   onSelected,
   options,
 }: {
-  displays?: Displays;
-  layers?: Layers;
+  displays?: Display[];
+  layers?: LayerMap;
   onBounds?: (id: string, bounds: Bounds) => void;
   onSelected?: (id: string) => void;
   options?: {

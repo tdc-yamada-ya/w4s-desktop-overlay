@@ -30,6 +30,9 @@ export const createSchema = (): Schema<ReplicantMap> => ({
           type: "object",
           properties: {
             bounds,
+            builtIn: {
+              type: "string",
+            },
             display: {
               type: "number",
             },

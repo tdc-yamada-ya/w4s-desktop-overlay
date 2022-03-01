@@ -1,11 +1,11 @@
 import {omit} from "lodash";
 
-import {OverlayConfig} from "../replicant/OverlayConfig";
+import {OverlaySettings} from "../replicant/OverlaySettings";
 
 export const deleteLayer = (
-  o?: OverlayConfig,
+  o?: OverlaySettings,
   id?: string,
-): OverlayConfig | undefined => {
+): OverlaySettings | undefined => {
   if (id == null) return o;
 
   return {

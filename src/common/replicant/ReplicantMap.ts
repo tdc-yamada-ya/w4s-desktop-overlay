@@ -1,7 +1,7 @@
-import {OverlayConfig} from "./OverlayConfig";
-import {Screen} from "./ScreenConfig";
+import {OverlaySettings} from "./OverlaySettings";
+import {Screen} from "./Screen";
 
 export type ReplicantMap = {
-  overlay?: OverlayConfig;
+  overlay?: OverlaySettings;
   screen?: Screen;
 };

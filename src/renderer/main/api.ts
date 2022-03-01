@@ -1,5 +1,5 @@
 import {Replicant} from "../../common/lib/electron-replicant/Replicant";
-import {LayerConfig} from "../../common/replicant/LayerConfig";
+import {LayerProperties} from "../../common/replicant/LayerProperties";
 import {ReplicantMap} from "../../common/replicant/ReplicantMap";
 
 export interface API {
@@ -9,7 +9,9 @@ export interface API {
 
   reload: (id: string) => void;
 
-  help: () => void;
+  subscribeOpenLayer: (
+    listener: (layer: LayerProperties) => void,
+  ) => () => void;
 
-  subscribeOpenLayer: (listener: (layer: LayerConfig) => void) => () => void;
+  showLayerSettingsWindow: (id?: string) => void;
 }

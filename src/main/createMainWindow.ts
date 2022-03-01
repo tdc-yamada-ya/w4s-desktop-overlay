@@ -1,27 +1,27 @@
+import {attachTitlebarToWindow} from "custom-electron-titlebar/main";
 import {BrowserWindow} from "electron";
 import path from "path";
 
-import {dev} from "./dev";
+import {isDev} from "./dev/dev";
 
 const destroyAllWindows = () =>
   BrowserWindow.getAllWindows().forEach((w) => w.destroy());
 
 export const createMainWindow = (): BrowserWindow => {
-  const w = new BrowserWindow({
-    height: 768,
+  const win = new BrowserWindow({
+    height: 720,
     titleBarStyle: "hidden",
-    width: 1024,
+    width: 920,
     webPreferences: {
       preload: path.join(__dirname, "..", "renderer", "main", "preload.js"),
     },
   });
 
-  w.setMenu(null);
-  w.on("closed", destroyAllWindows);
+  win.on("closed", destroyAllWindows);
+  win.loadFile("dist/renderer/main/index.html");
+  attachTitlebarToWindow(win);
 
-  if (dev) w.webContents.openDevTools({mode: "detach"});
+  if (isDev) win.webContents.openDevTools({mode: "detach"});
 
-  w.loadFile("dist/renderer/main/index.html");
-
-  return w;
+  return win;
 };
