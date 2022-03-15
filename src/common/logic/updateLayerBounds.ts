@@ -1,16 +1,16 @@
 import {merge} from "lodash";
 
 import {Bounds} from "../replicant/Bounds";
-import {OverlayConfig} from "../replicant/OverlayConfig";
+import {OverlaySettings} from "../replicant/OverlaySettings";
 
 export const updateLayerBounds = (
-  o?: OverlayConfig,
+  o?: OverlaySettings,
   id?: string,
   bounds?: Bounds,
-): OverlayConfig | undefined => {
+): OverlaySettings | undefined => {
   if (id == null) return o;
 
-  const d: OverlayConfig = {
+  const d: OverlaySettings = {
     layers: {
       [id]: {
         bounds,

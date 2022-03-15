@@ -1,12 +1,5 @@
-import React from "react";
-import {render} from "react-dom";
+import {renderRoot} from "../common/renderRoot";
+import "../common/styles/base";
+import {App} from "./components/App";
 
-import "../common/styles";
-import {Root} from "./components/Root";
-
-render(
-  <React.StrictMode>
-    <Root />
-  </React.StrictMode>,
-  document.getElementById("root"),
-);
+renderRoot(<App />);

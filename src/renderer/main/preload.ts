@@ -1,12 +1,13 @@
 import {Color, Titlebar} from "custom-electron-titlebar";
 import {contextBridge, ipcRenderer} from "electron";
 
+import icon from "../../../assets/icon.svg";
 import {createMessageSender} from "../../common/lib/electron-message/createMessageSender";
 import {createMessageSubscriber} from "../../common/lib/electron-message/createMessageSubscriber";
 import {createChildReplicant} from "../../common/lib/electron-replicant/createChildReplicant";
 import {createCachedReplicantFactory} from "../../common/lib/electron-replicant/createReplicantCache";
 import {MessageMap} from "../../common/message/MessageMap";
-import {LayerConfig} from "../../common/replicant/LayerConfig";
+import {LayerProperties} from "../../common/replicant/LayerProperties";
 import {ReplicantMap} from "../../common/replicant/ReplicantMap";
 import {API} from "./api";
 
@@ -24,29 +25,9 @@ const msgSubscriber = createMessageSubscriber<MessageMap, unknown>({
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-  let isMaximized = false;
-
-  msgSubscriber.on("titlebar:isMaximized", (_, v) => {
-    isMaximized = v;
-  });
-
   const titlebar = new Titlebar({
-    backgroundColor: Color.fromHex("#009688"),
-    onMinimize() {
-      msgSender.send("titlebar:minimize");
-    },
-    onMaximize() {
-      msgSender.send("titlebar:maximize");
-    },
-    onClose() {
-      msgSender.send("titlebar:close");
-    },
-    isMaximized() {
-      return isMaximized;
-    },
-    onMenuItemClick() {
-      return;
-    },
+    backgroundColor: Color.fromHex("#D9D9D9"),
+    icon,
   });
 
   msgSubscriber.on("version", (_, v) => {
@@ -63,13 +44,13 @@ const api: API = {
   reload(id) {
     msgSender.send("reload", id);
   },
-  help() {
-    msgSender.send("help");
-  },
   subscribeOpenLayer(listener) {
-    const l = (_: unknown, v: LayerConfig) => listener(v);
+    const l = (_: unknown, v: LayerProperties) => listener(v);
     msgSubscriber.on("openLayer", l);
     return () => msgSubscriber.off("openLayer", l);
+  },
+  showLayerSettingsWindow(id) {
+    msgSender.send("showLayerSettingsWindow", id);
   },
 };
 

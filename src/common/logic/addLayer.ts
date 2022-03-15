@@ -1,48 +1,63 @@
 import {merge} from "lodash";
 import {v4 as uuid} from "uuid";
 
-import {LayerConfig} from "../replicant/LayerConfig";
-import {OverlayConfig} from "../replicant/OverlayConfig";
-import {Screen} from "../replicant/ScreenConfig";
+import {LayerProperties} from "../replicant/LayerProperties";
+import {OverlaySettings} from "../replicant/OverlaySettings";
+import {Screen} from "../replicant/Screen";
 
-const width = 480;
-const height = 360;
+const defaultWidth = 480;
+const defaultHeight = 360;
+const defaultURL = "builtin://default/view";
+
+const defaultProperties: LayerProperties = {
+  audioMuted: true,
+  bounds: {
+    x: 0,
+    y: 0,
+    width: defaultWidth,
+    height: defaultHeight,
+  },
+  display: 0,
+  index: 0,
+  layoutingMode: false,
+  opacity: 0.8,
+  settingsURL: "builtin://default/settings",
+  title: "My Layer",
+  url: "builtin://default/view",
+  visible: true,
+};
 
 export const addLayer = (
-  o?: OverlayConfig,
+  o?: OverlaySettings,
   s?: Screen,
-  l?: LayerConfig,
-): OverlayConfig => {
+  l?: LayerProperties,
+): OverlaySettings => {
   const id = uuid();
   const display = 0;
 
   const b = s?.displays?.[display]?.bounds;
   const bx = b?.x ?? 0;
   const by = b?.y ?? 0;
-  const bw = b?.width ?? width;
-  const bh = b?.height ?? height;
-
+  const bw = b?.width ?? defaultWidth;
+  const bh = b?.height ?? defaultHeight;
   const bounds = {
-    x: bx + (bw - width) / 2,
-    y: by + (bh - height) / 2,
-    width,
-    height,
+    x: bx + (bw - defaultWidth) / 2,
+    y: by + (bh - defaultHeight) / 2,
+    width: defaultWidth,
+    height: defaultHeight,
   };
+
   const index = Object.keys(o?.layers || {}).length;
 
-  const diff: OverlayConfig = {
+  const diff: OverlaySettings = {
     layers: {
       [id]: {
-        audioMuted: true,
+        ...defaultProperties,
+        ...l,
+        url: l?.url || defaultURL,
         bounds,
         display,
         index,
-        layoutingMode: true,
-        opacity: 0.3,
-        settingsURL: l?.settingsURL ?? "",
-        title: l?.title ?? "",
-        url: l?.url ?? "",
-        visible: true,
       },
     },
     selectedLayerID: id,

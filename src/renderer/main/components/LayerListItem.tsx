@@ -1,6 +1,5 @@
 import {Box, ButtonBase, Typography, useTheme} from "@mui/material";
 
-import {parseURL} from "../../../common/logic/parseURL";
 import {LayerOpacitySlider} from "./LayerOpacitySlider";
 import {ToggleLayerAudioMutedButton} from "./ToggleLayerAudioMutedButton";
 import {ToggleLayerVisibleButton} from "./ToggleLayerVisibleButton";
@@ -11,10 +10,7 @@ import {useSelectedLayerID} from "./hooks/useSelectedLayerID";
 const useLayerTitle = (id: string) => {
   const layer = useLayer(id);
   if (layer?.title) return layer.title;
-  if (layer?.url) {
-    const {url, valid} = parseURL(layer?.url);
-    if (valid) return url?.host;
-  }
+  if (layer?.url) return layer?.url;
   return "No Title";
 };
 

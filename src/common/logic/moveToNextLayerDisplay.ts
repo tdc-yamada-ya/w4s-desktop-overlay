@@ -1,20 +1,20 @@
 import {merge} from "lodash";
 
-import {OverlayConfig} from "../replicant/OverlayConfig";
-import {Screen} from "../replicant/ScreenConfig";
+import {OverlaySettings} from "../replicant/OverlaySettings";
+import {Screen} from "../replicant/Screen";
 
 export const moveToNextLayerDisplay = (
-  o: OverlayConfig | undefined,
+  o: OverlaySettings | undefined,
   id: string,
   screen: Screen | undefined,
-): OverlayConfig => {
+): OverlaySettings => {
   const oldDisplay = o?.layers?.[id]?.display ?? 0;
   const displayCount = screen?.displays?.length ?? 0;
 
   const display = (oldDisplay + 1) % displayCount;
   const bounds = screen?.displays?.[display]?.bounds;
 
-  const diff: OverlayConfig = {
+  const diff: OverlaySettings = {
     layers: {
       [id]: {
         bounds: bounds,

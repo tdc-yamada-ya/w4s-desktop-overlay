@@ -25,7 +25,7 @@ export const FinishLayerLayoutingButton = ({id}: {id?: string}) => {
 
 export const FirstSteps = ({id}: {id?: string}) => {
   return (
-    <Container sx={{margin: "2rem auto"}} maxWidth='sm'>
+    <Container sx={{margin: "2rem auto"}} maxWidth='xs'>
       <Stepper orientation='vertical'>
         <Step active={true} expanded={true}>
           <StepLabel>Enter the Graphics URL.</StepLabel>

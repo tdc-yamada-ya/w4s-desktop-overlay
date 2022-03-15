@@ -1,7 +1,7 @@
 import {fabric} from "fabric";
 
 import {Bounds} from "../../../../common/replicant/Bounds";
-import {LayerConfig} from "../../../../common/replicant/LayerConfig";
+import {LayerProperties} from "../../../../common/replicant/LayerProperties";
 
 const createCustomProperty = <T>(
   defaultValue: T,
@@ -26,7 +26,7 @@ export const createLayerObject = ({
   onBounds,
   onSelected,
 }: {
-  layer?: LayerConfig;
+  layer?: LayerProperties;
   onBounds?: (bounds: Bounds) => void;
   onSelected?: () => void;
 }) => {

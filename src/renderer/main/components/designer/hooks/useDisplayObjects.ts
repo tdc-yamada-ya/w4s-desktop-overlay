@@ -1,12 +1,12 @@
 import {useMemo} from "react";
 
-import {Displays} from "../../../../../common/replicant/Displays";
+import {Display} from "../../../../../common/replicant/Display";
 import {createDisplayObject} from "../createDisplayObject";
 
 export const useDisplayObjects = ({
   displays = [],
 }: {
-  displays?: Displays;
+  displays?: Display[];
 }): fabric.Object[] =>
   useMemo(
     () =>

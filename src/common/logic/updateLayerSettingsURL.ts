@@ -1,15 +1,15 @@
 import {merge} from "lodash";
 
-import {OverlayConfig} from "../replicant/OverlayConfig";
+import {OverlaySettings} from "../replicant/OverlaySettings";
 
 export const updateLayerSettingsURL = (
-  o?: OverlayConfig,
+  o?: OverlaySettings,
   id?: string,
   settingsURL?: string,
-): OverlayConfig | undefined => {
+): OverlaySettings | undefined => {
   if (id == null) return o;
 
-  const d: OverlayConfig = {
+  const d: OverlaySettings = {
     layers: {
       [id]: {
         settingsURL,

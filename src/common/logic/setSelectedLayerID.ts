@@ -1,12 +1,12 @@
 import {merge} from "lodash";
 
-import {OverlayConfig} from "../replicant/OverlayConfig";
+import {OverlaySettings} from "../replicant/OverlaySettings";
 
 export const setSelectedLayerID = (
-  o?: OverlayConfig,
+  o?: OverlaySettings,
   id?: string,
-): OverlayConfig => {
-  const diff: OverlayConfig = {
+): OverlaySettings => {
+  const diff: OverlaySettings = {
     selectedLayerID: id,
   };
 

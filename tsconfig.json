@@ -13,6 +13,11 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
+    "paths": {
+      "custom-electron-titlebar/main": [
+        "./node_modules/custom-electron-titlebar/dist/main/main.d.ts"
+      ]
+    },
     "sourceMap": true,
     "strict": true,
     "target": "ESNext"
