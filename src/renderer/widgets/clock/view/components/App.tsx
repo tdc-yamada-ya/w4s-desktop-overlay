@@ -1,26 +1,21 @@
 import {Box} from "@mui/material";
-import moment from "moment";
 import "moment-timezone";
-import {useEffect, useState} from "react";
 import Clock from "react-clock";
 
-import {useLocalStorageStateAsJSON} from "../../../common/components/hooks/useLocalStorageState";
-import {Preferences} from "../../common/Properties";
+import {useLocalStorageStateAsJSON} from "../../../common/components/hooks/useLocalStorageStateAsJSON";
+import {Preferences} from "../../common/Preferences";
+import {DateLabel} from "./DateLabel";
+import {TimeLabel} from "./TimeLabel";
+import {ZoneLabel} from "./ZoneLabel";
+import {useZonedDateWithInterval} from "./hooks/useZonedDateWithInterval";
 
 export const App = () => {
   const [preferences] = useLocalStorageStateAsJSON<Preferences>("preferences");
-  const [value, setValue] = useState(new Date());
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      const m = moment();
-      const n = m.tz(preferences?.zoneName ?? "", true);
-      const o = n ? n.toDate() : m.toDate();
-      setValue(o);
-    }, 1000);
-
-    return () => clearInterval(id);
-  }, [preferences]);
+  const date = useZonedDateWithInterval(
+    preferences?.zoneName ?? "",
+    Date.now,
+    500,
+  );
 
   return (
     <Box
@@ -35,7 +30,7 @@ export const App = () => {
       <Box
         sx={{
           alignItems: "center",
-          backgroundColor: "#ccc",
+          backgroundColor: "#ddd",
           borderRadius: "1rem",
           display: "flex",
           flexDirection: "column",
@@ -44,7 +39,19 @@ export const App = () => {
           padding: "1rem",
         }}
       >
-        <Clock value={value} />
+        <Clock value={date} />
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.3rem",
+          }}
+        >
+          <DateLabel value={date} />
+          <TimeLabel value={date} />
+          <ZoneLabel value={preferences?.zoneName} />
+        </Box>
       </Box>
     </Box>
   );

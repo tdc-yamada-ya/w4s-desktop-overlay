@@ -7,35 +7,24 @@ export const useLocalStorageState = (
     window.localStorage.getItem(key),
   );
 
-  const refresh = useCallback(
-    () => setState(window.localStorage.getItem(key)),
-    [key],
-  );
-
   useEffect(() => {
     const listener = (e: StorageEvent): void => {
       if (e.key !== key) return;
-      refresh();
+      setState(window.localStorage.getItem(key));
     };
 
     window.addEventListener("storage", listener);
 
     return () => window.removeEventListener("storage", listener);
-  }, [key, refresh]);
+  }, [key]);
 
-  const set = (value: string): void => {
-    setState(value);
-    window.localStorage.setItem(key, value);
-  };
+  const set = useCallback(
+    (value: string): void => {
+      setState(value);
+      window.localStorage.setItem(key, value);
+    },
+    [key],
+  );
 
   return [state, set];
-};
-
-export const useLocalStorageStateAsJSON = <T>(
-  key: string,
-): [T | null, (value: T) => void] => {
-  const [current, setCurrent] = useLocalStorageState(key);
-  const value = current ? (JSON.parse(current) as T) : null;
-  const set = (value: T) => setCurrent(JSON.stringify(value));
-  return [value, set];
 };
