@@ -9,8 +9,9 @@ export const useEpochMillisecondsWithInterval = (
   const [value, setValue] = useState(nowEpochMilliSeconds());
 
   useInterval(() => {
-    const date = nowEpochMilliSeconds();
-    setValue(date);
+    const newValue = nowEpochMilliSeconds();
+    if (value === newValue) return;
+    setValue(newValue);
   }, interval);
 
   return value;

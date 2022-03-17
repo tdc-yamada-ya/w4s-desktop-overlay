@@ -48,7 +48,7 @@ const common = ({dir}: {dir: string[]}): Configuration => ({
         ],
       },
       {
-        test: /\.(ico|png|jpe?g|svg|eot|woff?2?)$/,
+        test: /\.(ico|png|jpe?g|svg|eot|woff?2?|ogg)$/,
         type: "asset/resource",
       },
     ],

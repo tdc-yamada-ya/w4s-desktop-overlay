@@ -1,11 +1,12 @@
 import {Stack, Typography} from "@mui/material";
 
+import {DateTime} from "../../common/DateTime";
+
 const format = (value: number) => value.toString().padStart(2, "0");
 
 const Element = ({value}: {value: number}) => (
   <Typography
     sx={{
-      fontFamily: "'Share Tech Mono'",
       fontSize: "1.5rem",
       lineHeight: 1,
     }}
@@ -17,7 +18,6 @@ const Element = ({value}: {value: number}) => (
 const Separator = ({visible}: {visible: boolean}) => (
   <Typography
     sx={{
-      fontFamily: "'Share Tech Mono'",
       fontSize: "1.5rem",
       lineHeight: 1,
       margin: "0 -0.2rem",
@@ -28,17 +28,16 @@ const Separator = ({visible}: {visible: boolean}) => (
   </Typography>
 );
 
-export const TimeLabel = ({value}: {value: Date}) => {
-  const seconds = value.getSeconds();
-  const separatorVisible = seconds % 2 === 0;
+export const TimeLabel = ({value}: {value: DateTime}) => {
+  const separatorVisible = value.seconds % 2 === 0;
 
   return (
     <Stack direction='row' alignItems='center'>
-      <Element value={value.getHours()} />
+      <Element value={value.hours} />
       <Separator visible={separatorVisible} />
-      <Element value={value.getMinutes()} />
+      <Element value={value.minutes} />
       <Separator visible={separatorVisible} />
-      <Element value={value.getSeconds()} />
+      <Element value={value.seconds} />
     </Stack>
   );
 };

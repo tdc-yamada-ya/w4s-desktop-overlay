@@ -7,3 +7,4 @@ declare module "*.eot";
 declare module "*.wof";
 declare module "*.woff";
 declare module "*.woff2";
+declare module "*.ogg";
