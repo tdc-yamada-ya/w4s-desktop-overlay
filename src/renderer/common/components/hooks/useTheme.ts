@@ -2,7 +2,7 @@ import {ThemeOptions, createTheme} from "@mui/material";
 import {teal} from "@mui/material/colors";
 import {useMemo} from "react";
 
-const defaultThemeOptions: ThemeOptions = {
+export const defaultThemeOptions: ThemeOptions = {
   palette: {
     primary: {
       main: teal[500],
@@ -14,5 +14,5 @@ const defaultThemeOptions: ThemeOptions = {
   },
 };
 
-export const useTheme = () =>
-  useMemo(() => createTheme(defaultThemeOptions), []);
+export const useTheme = (options?: Partial<ThemeOptions>) =>
+  useMemo(() => createTheme({...defaultThemeOptions, ...options}), [options]);
