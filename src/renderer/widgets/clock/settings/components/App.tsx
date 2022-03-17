@@ -73,9 +73,9 @@ export const App = () => {
                     save({
                       alarmAt: v
                         ? {
-                            hours: v.hour(),
-                            minutes: v.minute(),
-                            seconds: v.second(),
+                            hours: v.hour() || 0,
+                            minutes: v.minute() || 0,
+                            seconds: v.second() || 0,
                           }
                         : null,
                     })
