@@ -3,7 +3,7 @@ import {fabric} from "fabric";
 import {PanListener, Panning} from "./Panning";
 
 export const attachPanning = ({
-  buttons = [1, 2],
+  buttons = [0, 1, 2],
   canvas,
   panning,
 }: {
@@ -11,11 +11,15 @@ export const attachPanning = ({
   canvas: fabric.Canvas;
   panning: Panning;
 }) => {
+  const buttonSet = new Set(buttons);
   let button = 0;
-  const isTargetButton = (button: number) => buttons.find((v) => v === button);
+
+  const isTargetButton = (button: number) => buttonSet.has(button);
 
   const down = ({e}: fabric.IEvent<MouseEvent>) => {
-    if (!isTargetButton(e.button)) return;
+    console.log(e.button, buttons);
+
+    if (canvas.getActiveObject() || !isTargetButton(e.button)) return;
 
     panning.start({x: e.clientX, y: e.clientY});
     button = e.button;

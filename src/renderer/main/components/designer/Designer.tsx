@@ -1,4 +1,6 @@
-import {Box} from "@mui/material";
+import PanToolIcon from "@mui/icons-material/PanTool";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import {Box, Typography} from "@mui/material";
 import {useEffect} from "react";
 import useDimensions from "react-cool-dimensions";
 
@@ -15,7 +17,7 @@ import {useLayerObjects} from "./hooks/useLayerObjects";
 import {useWholeView} from "./hooks/useWholeView";
 import {syncObjects} from "./syncObjects";
 
-export const DesignerInternal = ({
+export const CanvasContainer = ({
   displays,
   layers,
   onBounds,
@@ -53,6 +55,52 @@ export const DesignerInternal = ({
   return <div ref={ref} />;
 };
 
+const Guide = () => {
+  return (
+    <table
+      css={{
+        margin: "0.5rem",
+        opacity: 0.5,
+        "tr:not(:first-of-type)": {
+          marginBottom: "0.2rem",
+        },
+        td: {
+          paddingRight: "0.4rem",
+          verticalAlign: "center",
+        },
+        "td:first-of-type": {
+          textAlign: "right",
+        },
+      }}
+    >
+      <tbody>
+        <tr>
+          <td>
+            <PanToolIcon sx={{fontSize: "0.9rem"}} />
+          </td>
+          <td>
+            <Typography>Mouse Drag</Typography>
+          </td>
+          <td>
+            <Typography>Move the canvas or layer.</Typography>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <ZoomInIcon sx={{fontSize: "1rem", marginRight: "-0.1rem"}} />
+          </td>
+          <td>
+            <Typography>Mouse Wheel</Typography>
+          </td>
+          <td>
+            <Typography>Zoom in and out.</Typography>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+};
+
 export const Designer = () => {
   const overlay = useOverlay();
   const screen = useScreen();
@@ -62,7 +110,7 @@ export const Designer = () => {
 
   return (
     <Box ref={observe} sx={{height: "100%", width: "100%"}}>
-      <DesignerInternal
+      <CanvasContainer
         displays={screen?.displays}
         layers={overlay?.layers}
         onBounds={(id, bounds) => update(id, bounds)}
@@ -72,6 +120,9 @@ export const Designer = () => {
           width,
         }}
       />
+      <Box sx={{bottom: 0, left: 0, position: "absolute"}}>
+        <Guide />
+      </Box>
     </Box>
   );
 };
