@@ -10,6 +10,7 @@ import {LayerMap} from "../../../../common/replicant/LayerMap";
 import {useOverlay} from "../hooks/useOverlay";
 import {useScreen} from "../hooks/useScreen";
 import {useSelectLayer} from "../hooks/useSelectLayer";
+import {useSelectedLayerID} from "../hooks/useSelectedLayerID";
 import {useUpdateLayerBoundsWithID} from "../hooks/useUpdateLayerBounds";
 import {useCanvas} from "./hooks/useCanvas";
 import {useDisplayObjects} from "./hooks/useDisplayObjects";
@@ -23,6 +24,7 @@ export const CanvasContainer = ({
   onBounds,
   onSelected,
   options,
+  selectedLayerID,
 }: {
   displays?: Display[];
   layers?: LayerMap;
@@ -32,6 +34,7 @@ export const CanvasContainer = ({
     height?: number;
     width?: number;
   };
+  selectedLayerID?: string;
 }) => {
   const [ref, canvas] = useCanvas({
     height: options?.height,
@@ -43,14 +46,25 @@ export const CanvasContainer = ({
     canvas,
   });
 
-  const doo = useDisplayObjects({displays});
-  const loo = useLayerObjects({layers, onBounds, onSelected});
+  const displayObjects = useDisplayObjects({displays});
+  const layerObjects = useLayerObjects({layers, onBounds, onSelected});
 
   useEffect(() => {
-    syncObjects(canvas, [...doo, ...loo]);
-    doo.forEach((o) => o.sendToBack());
+    syncObjects(canvas, [
+      ...Object.values(displayObjects),
+      ...Object.values(layerObjects),
+    ]);
+    Object.values(displayObjects).forEach((o) => o.sendToBack());
     canvas?.requestRenderAll();
-  }, [canvas, doo, loo]);
+  }, [canvas, displayObjects, layerObjects]);
+
+  useEffect(() => {
+    if (!canvas || !selectedLayerID) return;
+    const object = layerObjects[selectedLayerID];
+    if (!object) return;
+    canvas._activeObject = object;
+    canvas.renderAll();
+  }, [canvas, layerObjects, selectedLayerID]);
 
   return <div ref={ref} />;
 };
@@ -107,6 +121,7 @@ export const Designer = () => {
   const {observe, width, height} = useDimensions();
   const update = useUpdateLayerBoundsWithID();
   const selectLayer = useSelectLayer();
+  const selectedLayerID = useSelectedLayerID();
 
   return (
     <Box ref={observe} sx={{height: "100%", width: "100%"}}>
@@ -119,6 +134,7 @@ export const Designer = () => {
           height,
           width,
         }}
+        selectedLayerID={selectedLayerID}
       />
       <Box sx={{bottom: 0, left: 0, position: "absolute"}}>
         <Guide />

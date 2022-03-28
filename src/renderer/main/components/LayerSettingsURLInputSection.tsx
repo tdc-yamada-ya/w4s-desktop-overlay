@@ -2,7 +2,7 @@ import {Box} from "@mui/material";
 
 import {AutoSubmitTextField} from "./AutoSubmitTextField";
 import {InputSection} from "./InputSection";
-import {ShowLayerSettingsWindowButton} from "./ShowLayerSettingsWindowButton";
+import {ShowSpecificSettingsWindowButton} from "./ShowSpecificSettingsWindowButton";
 import {useLayer} from "./hooks/useLayer";
 import {useUpdateLayerSettingsURL} from "./hooks/useUpdateLayerSettingsURL";
 
@@ -34,7 +34,7 @@ export const LayerSettingsURLInputSection = ({id}: {id?: string}) => {
         <LayerSettingsURLField id={id} />
       </InputSection>
       <Box sx={{display: "flex"}}>
-        <ShowLayerSettingsWindowButton id={id} />
+        <ShowSpecificSettingsWindowButton id={id} />
       </Box>
     </Box>
   );

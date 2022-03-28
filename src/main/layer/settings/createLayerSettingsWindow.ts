@@ -64,6 +64,9 @@ export const createLayerSettingsWindow = ({
   if (isDev) win.webContents.openDevTools({mode: "detach"});
 
   return {
+    isDestroyed() {
+      return win.isDestroyed();
+    },
     show() {
       win.show();
     },

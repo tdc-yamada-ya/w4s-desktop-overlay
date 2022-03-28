@@ -17,8 +17,6 @@ export const attachPanning = ({
   const isTargetButton = (button: number) => buttonSet.has(button);
 
   const down = ({e}: fabric.IEvent<MouseEvent>) => {
-    console.log(e.button, buttons);
-
     if (canvas.getActiveObject() || !isTargetButton(e.button)) return;
 
     panning.start({x: e.clientX, y: e.clientY});
