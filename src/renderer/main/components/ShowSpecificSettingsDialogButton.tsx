@@ -1,19 +1,19 @@
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {Button, Tooltip} from "@mui/material";
 
 const showLayerSettingsWindow = (id?: string) => {
   window.api.showLayerSettingsWindow(id);
 };
 
-export const ShowLayerSettingsWindowButton = ({id}: {id?: string}) => (
-  <Tooltip title='Show layer settings window'>
+export const ShowSpecificSettingsDialogButton = ({id}: {id?: string}) => (
+  <Tooltip title='Show specific settings window'>
     <Button
-      startIcon={<OpenInNewIcon />}
+      startIcon={<SettingsIcon />}
       variant='text'
       size='small'
       onClick={() => showLayerSettingsWindow(id)}
     >
-      Widget Settings
+      Specific
     </Button>
   </Tooltip>
 );

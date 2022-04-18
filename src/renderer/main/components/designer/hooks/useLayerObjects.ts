@@ -6,7 +6,7 @@ import {Bounds} from "../../../../../common/replicant/Bounds";
 import {LayerMap} from "../../../../../common/replicant/LayerMap";
 import {createLayerObject} from "../createLayerObject";
 
-type ObjectMap = {[id: string]: fabric.Object};
+export type LayerObjects = {[id: string]: fabric.Object};
 
 export const useLayerObjects = ({
   layers = {},
@@ -16,17 +16,15 @@ export const useLayerObjects = ({
   layers?: LayerMap;
   onBounds?: (id: string, bounds: Bounds) => void;
   onSelected?: (id: string) => void;
-}): fabric.Object[] => {
-  const map = useRef<ObjectMap>({});
+}): LayerObjects => {
+  const oldObjects = useRef<LayerObjects>({});
 
-  return useMemo(() => {
-    const objects: fabric.Object[] = [];
-    const nextMap: ObjectMap = {};
-
-    const ids = union(Object.keys(layers), Object.keys(map.current));
+  const objects = useMemo(() => {
+    const nextObjects: LayerObjects = {};
+    const ids = union(Object.keys(layers), Object.keys(oldObjects.current));
 
     for (const id of ids) {
-      const object = map.current[id];
+      const object = oldObjects.current[id];
       const layer = layers[id];
 
       if (!layer) continue;
@@ -46,22 +44,23 @@ export const useLayerObjects = ({
           object.height = layer.bounds?.height;
         }
 
-        objects.push(object);
-        nextMap[id] = object;
+        nextObjects[id] = object;
       } else {
         const object = createLayerObject({
           layer,
           onBounds: (bounds) => onBounds?.(id, bounds),
-          onSelected: () => onSelected?.(id),
+          onSelected: () => {
+            onSelected?.(id);
+          },
         });
 
-        objects.push(object);
-        nextMap[id] = object;
+        nextObjects[id] = object;
       }
     }
 
-    map.current = nextMap;
-
-    return objects;
+    oldObjects.current = nextObjects;
+    return nextObjects;
   }, [layers, onBounds, onSelected]);
+
+  return objects;
 };

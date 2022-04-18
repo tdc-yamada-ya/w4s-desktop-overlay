@@ -115,9 +115,11 @@ const main = () => {
 
   initDefaultProtocolClient();
 
-  app.on("web-contents-created", (_, c) => disableNavigate(c));
-  app.on("web-contents-created", (_, c) => disableOpenWindow(c));
   app.whenReady().then(init);
+  app.on("web-contents-created", (_, contents) => {
+    disableNavigate(contents);
+    disableOpenWindow(contents);
+  });
   app.once("window-all-closed", quit);
 };
 

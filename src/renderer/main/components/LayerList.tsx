@@ -35,7 +35,7 @@ const Guide = () => {
       <Typography sx={{color: theme?.palette.text.disabled}}>
         No layers. Click the &quot;Add Layer&quot; button.
       </Typography>
-      <AddLayerButton variant='outlined' />
+      <AddLayerButton />
     </Box>
   );
 };

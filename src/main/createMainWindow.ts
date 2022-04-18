@@ -9,7 +9,7 @@ const destroyAllWindows = () =>
 
 export const createMainWindow = (): BrowserWindow => {
   const win = new BrowserWindow({
-    height: 720,
+    height: 640,
     titleBarStyle: "hidden",
     width: 920,
     webPreferences: {

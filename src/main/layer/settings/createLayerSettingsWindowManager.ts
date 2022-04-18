@@ -1,11 +1,10 @@
 import {BrowserWindow} from "electron";
+import {omitBy} from "lodash";
 
 import {LayerProperties} from "../../../common/replicant/LayerProperties";
 import {LayerSettingsWindow} from "./LayerSettingsWindow";
 import {LayerSettingsWindowManager} from "./LayoutSettingsWindowManager";
 import {createLayerSettingsWindow} from "./createLayerSettingsWindow";
-
-type LayerSettingsWindowMap = {[id: string]: LayerSettingsWindow};
 
 export const createLayerSettingsWindowManager = ({
   layers,
@@ -14,13 +13,16 @@ export const createLayerSettingsWindowManager = ({
   layers: (id: string) => LayerProperties | undefined;
   parentWindow: () => BrowserWindow;
 }): LayerSettingsWindowManager => {
-  const windowMap: LayerSettingsWindowMap = {};
+  let windowCache: {[id: string]: LayerSettingsWindow} = {};
+
+  const removeWindowCache = (id: string) =>
+    (windowCache = omitBy(windowCache, id));
 
   return {
     show(id) {
-      const existingWindow = windowMap[id];
-      if (existingWindow) {
-        existingWindow.show();
+      const cachedWindow = windowCache[id];
+      if (cachedWindow && !cachedWindow.isDestroyed()) {
+        cachedWindow.show();
         return;
       }
 
@@ -29,20 +31,16 @@ export const createLayerSettingsWindowManager = ({
         return;
       }
 
-      const pw = parentWindow();
-
-      const win = createLayerSettingsWindow({
-        onClose() {
-          delete windowMap[id];
-        },
-        parent: pw,
+      const parent = parentWindow();
+      const window = createLayerSettingsWindow({
+        onClose: () => removeWindowCache(id),
+        parent: parent,
         sessionName: id,
         url: layer.settingsURL,
       });
+      window.show();
 
-      windowMap[id] = win;
-
-      win.show();
+      windowCache[id] = window;
     },
   };
 };
