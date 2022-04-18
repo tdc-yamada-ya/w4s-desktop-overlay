@@ -4,14 +4,14 @@ import {Fragment, useState} from "react";
 
 import {AddLayerDialog} from "./AddLayerDialog";
 
-export const AddLayerButton = ({variant}: {variant?: "outlined"}) => {
+export const AddLayerButton = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <Fragment>
       <Button
         startIcon={<AddIcon />}
-        variant={variant}
+        variant='outlined'
         size='small'
         onClick={() => setOpen(true)}
       >

@@ -5,7 +5,7 @@ const showLayerSettingsWindow = (id?: string) => {
   window.api.showLayerSettingsWindow(id);
 };
 
-export const ShowCommonSettingsDialogButton = ({id}: {id?: string}) => (
+export const ShowSpecificSettingsDialogButton = ({id}: {id?: string}) => (
   <Tooltip title='Show specific settings window'>
     <Button
       startIcon={<SettingsIcon />}

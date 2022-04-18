@@ -14,10 +14,10 @@ const centerBounds = (
   bounds: Rectangle,
   size: Size,
 ): {x: number; y: number; width: number; height: number} => ({
-  x: bounds.x + (bounds.width - size.width) / 2,
-  y: bounds.y + (bounds.height - size.height) / 2,
-  width: size.width,
-  height: size.height,
+  x: Math.floor(bounds.x + (bounds.width - size.width) / 2),
+  y: Math.floor(bounds.y + (bounds.height - size.height) / 2),
+  width: Math.floor(size.width),
+  height: Math.floor(size.height),
 });
 
 const centerParentWindow = (

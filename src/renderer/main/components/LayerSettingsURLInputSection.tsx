@@ -2,7 +2,7 @@ import {Box} from "@mui/material";
 
 import {AutoSubmitTextField} from "./AutoSubmitTextField";
 import {InputSection} from "./InputSection";
-import {ShowSpecificSettingsWindowButton} from "./ShowSpecificSettingsWindowButton";
+import {ShowCommonSettingsWindowButton} from "./ShowCommonSettingsWindowButton";
 import {useLayer} from "./hooks/useLayer";
 import {useUpdateLayerSettingsURL} from "./hooks/useUpdateLayerSettingsURL";
 
@@ -28,13 +28,13 @@ export const LayerSettingsURLInputSection = ({id}: {id?: string}) => {
   return (
     <Box sx={{display: "flex", flexDirection: "column", gap: "0.5rem"}}>
       <InputSection
-        label='Settings URL'
+        label='Specific Settings URL'
         description='If a URL exists for the configuration, you can set it.'
       >
         <LayerSettingsURLField id={id} />
       </InputSection>
       <Box sx={{display: "flex"}}>
-        <ShowSpecificSettingsWindowButton id={id} />
+        <ShowCommonSettingsWindowButton id={id} />
       </Box>
     </Box>
   );

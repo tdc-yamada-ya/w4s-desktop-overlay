@@ -26,7 +26,8 @@ const msgSubscriber = createMessageSubscriber<MessageMap, unknown>({
 
 window.addEventListener("DOMContentLoaded", () => {
   const titlebar = new Titlebar({
-    backgroundColor: Color.fromHex("#D9D9D9"),
+    itemBackgroundColor: Color.fromHex("#00695C"),
+    backgroundColor: Color.fromHex("#00695C"),
     icon,
   });
 

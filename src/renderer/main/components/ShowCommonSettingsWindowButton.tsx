@@ -4,7 +4,7 @@ import {Fragment, useState} from "react";
 
 import {CommonSettingsDialog} from "./CommonSettingsDialog";
 
-export const ShowSpecificSettingsWindowButton = ({id}: {id?: string}) => {
+export const ShowCommonSettingsWindowButton = ({id}: {id?: string}) => {
   const [open, setOpen] = useState(false);
 
   return (

@@ -2,8 +2,8 @@ import {Box, Stack, Typography} from "@mui/material";
 
 import {DeleteLayerButton} from "./DeleteLayerButton";
 import {ReloadLayerButton} from "./ReloadLayerButton";
-import {ShowCommonSettingsDialogButton} from "./ShowCommonSettingsDialogButton";
-import {ShowSpecificSettingsWindowButton} from "./ShowSpecificSettingsWindowButton";
+import {ShowCommonSettingsWindowButton} from "./ShowCommonSettingsWindowButton";
+import {ShowSpecificSettingsDialogButton} from "./ShowSpecificSettingsDialogButton";
 import {ToggleLayerAudioMutedButton} from "./ToggleLayerAudioMutedButton";
 import {ToggleLayerLayoutingModeButton} from "./ToggleLayerLayoutingModeButton";
 import {Designer} from "./designer/Designer";
@@ -14,8 +14,8 @@ const Toolbar = () => {
   const id = useSelectedLayerID();
   return (
     <Stack direction='row' spacing={0}>
-      <ShowCommonSettingsDialogButton id={id} />
-      <ShowSpecificSettingsWindowButton id={id} />
+      <ShowSpecificSettingsDialogButton id={id} />
+      <ShowCommonSettingsWindowButton id={id} />
       <ReloadLayerButton id={id} />
       <ToggleLayerAudioMutedButton id={id} />
       <ToggleLayerLayoutingModeButton id={id} />
