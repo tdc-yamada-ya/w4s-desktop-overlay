@@ -9,4 +9,5 @@ export type LayerWindow = {
   setOpacity(v: number): void;
   setURL(v: string): void;
   setVisible(v: boolean): void;
+  setAllowUserMedia(v: boolean): void;
 };

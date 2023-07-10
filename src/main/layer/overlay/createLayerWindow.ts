@@ -116,5 +116,11 @@ export const createLayerWindow = ({
       setWindowPageWithLayerSourceURL(win, v);
     },
     setVisible: createSetVisibleFunction(win),
+    setAllowUserMedia(v: boolean) {
+      const sess = win.webContents.session;
+      sess.setPermissionRequestHandler((_webContents, _permission, callback) =>
+        callback(v),
+      );
+    },
   };
 };

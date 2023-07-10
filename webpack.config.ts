@@ -125,6 +125,7 @@ const rendererSet = (): Configuration[] => [
   preload("main"),
   renderer("main"),
   widget("clock"),
+  widget("video"),
   widget("default"),
 ];
 

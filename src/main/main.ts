@@ -1,5 +1,12 @@
 import {setupTitlebar} from "custom-electron-titlebar/main";
-import {IpcMainEvent, WebContents, app, ipcMain} from "electron";
+import {
+  BrowserWindow,
+  IpcMainEvent,
+  WebContents,
+  app,
+  desktopCapturer,
+  ipcMain,
+} from "electron";
 import {screen} from "electron";
 
 import {createMessageSender} from "../common/lib/electron-message/createMessageSender";
@@ -86,6 +93,26 @@ const init = async () => {
   );
   msgSubscriber.on("showLayerSettingsWindow", (_, id) => {
     layerSettingsWindowManager.show(id);
+  });
+  ipcMain.handle("fetchWindowIds", async () => {
+    try {
+      const sources = await desktopCapturer.getSources({
+        types: ["window", "screen"],
+      });
+      return sources;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  });
+  ipcMain.handle("getCurrentLayerId", (event) => {
+    const windowId = BrowserWindow.getAllWindows().find(
+      (win) => win.webContents.id === event.sender.id,
+    )?.id;
+    if (!windowId) {
+      return null;
+    }
+    return layerSettingsWindowManager.getLayerIdfromElectronWindowId(windowId);
   });
 
   initAppProtocol({

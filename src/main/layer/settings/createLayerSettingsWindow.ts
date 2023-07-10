@@ -1,4 +1,5 @@
 import {BrowserWindow, Rectangle} from "electron";
+import path from "path";
 
 import {isDev} from "../../dev/dev";
 import {getLayerSession} from "../session/getLayerSession";
@@ -48,8 +49,15 @@ export const createLayerSettingsWindow = ({
     show: false,
     skipTaskbar: false,
     webPreferences: {
-      sandbox: true,
-      session: getLayerSession(sessionName),
+      session: getLayerSession(sessionName, true),
+      nodeIntegration: true,
+      preload: path.join(
+        __dirname,
+        "../../..",
+        "renderer",
+        "main",
+        "preload.js",
+      ),
     },
   });
 
@@ -69,6 +77,9 @@ export const createLayerSettingsWindow = ({
     },
     show() {
       win.show();
+    },
+    getElectronWindowId() {
+      return win.id;
     },
   };
 };

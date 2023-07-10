@@ -53,6 +53,12 @@ const api: API = {
   showLayerSettingsWindow(id) {
     msgSender.send("showLayerSettingsWindow", id);
   },
+  fetchWindowIds() {
+    return ipcRenderer.invoke("fetchWindowIds");
+  },
+  getCurrentLayerId() {
+    return ipcRenderer.invoke("getCurrentLayerId");
+  },
 };
 
 contextBridge.exposeInMainWorld("api", api);
