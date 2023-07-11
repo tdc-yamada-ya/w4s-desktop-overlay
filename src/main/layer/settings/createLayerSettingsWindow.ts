@@ -53,7 +53,9 @@ export const createLayerSettingsWindow = ({
       nodeIntegration: true,
       preload: path.join(
         __dirname,
-        "../../..",
+        "..",
+        "..",
+        "..",
         "renderer",
         "main",
         "preload.js",
