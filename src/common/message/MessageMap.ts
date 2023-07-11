@@ -10,4 +10,6 @@ export type MessageMap = {
   "titlebar:maximize": {data: unknown};
   "titlebar:close": {data: unknown};
   "titlebar:isMaximized": {data: boolean};
+  fetchWindowIds: {data: boolean};
+  getCurrentLayerId: {data: unknown};
 };

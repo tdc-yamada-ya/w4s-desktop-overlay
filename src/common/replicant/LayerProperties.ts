@@ -12,4 +12,5 @@ export type LayerProperties = {
   url?: string;
   settingsURL?: string;
   visible?: boolean;
+  allowUserMedia?: boolean;
 };

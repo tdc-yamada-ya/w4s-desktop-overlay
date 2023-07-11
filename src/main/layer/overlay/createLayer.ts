@@ -39,6 +39,7 @@ export const createLayer = ({
     win.setVisible(newProperties.visible ?? false);
     win.setCSS(newProperties.css ?? "");
 
+    win.setAllowUserMedia(newProperties.allowUserMedia ?? false);
     return win;
   };
   let win: LayerWindow = createWindow(properties);
@@ -81,6 +82,9 @@ export const createLayer = ({
         win.setCSS(diff.css);
       }
 
+      if (diff.allowUserMedia != null) {
+        win.setAllowUserMedia(diff.allowUserMedia);
+      }
       currentProperties = clone(properties);
     },
     dispose() {

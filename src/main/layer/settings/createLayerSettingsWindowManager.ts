@@ -42,5 +42,15 @@ export const createLayerSettingsWindowManager = ({
 
       windowCache[id] = window;
     },
+    getLayerIdfromElectronWindowId(electronId: number) {
+      return (
+        Object.keys(windowCache).find(
+          (id) =>
+            windowCache[id] &&
+            !windowCache[id]!.isDestroyed() &&
+            windowCache[id]?.getElectronWindowId() == electronId,
+        ) ?? null
+      );
+    },
   };
 };

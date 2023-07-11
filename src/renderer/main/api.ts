@@ -1,3 +1,5 @@
+import {DesktopCapturerSource} from "electron";
+
 import {Replicant} from "../../common/lib/electron-replicant/Replicant";
 import {LayerProperties} from "../../common/replicant/LayerProperties";
 import {ReplicantMap} from "../../common/replicant/ReplicantMap";
@@ -14,4 +16,6 @@ export interface API {
   ) => () => void;
 
   showLayerSettingsWindow: (id?: string) => void;
+  fetchWindowIds(): Promise<DesktopCapturerSource[]>;
+  getCurrentLayerId(): Promise<string | null>;
 }
